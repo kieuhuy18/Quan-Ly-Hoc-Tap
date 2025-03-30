@@ -1,0 +1,10 @@
+/* Định dạng chung cho toàn bộ giao diện */
+.root {
+    -fx-font-family: "Arial";
+    -fx-background-color: #f4f4f4;
+}
+
+.VBox{
+    -fx-background-color: #DDDDDD;
+}
+

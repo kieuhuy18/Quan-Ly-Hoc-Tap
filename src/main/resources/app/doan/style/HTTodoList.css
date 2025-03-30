@@ -1,0 +1,81 @@
+#a{
+    -fx-background-image: url("../image/Plus.png"); /* Url of the icon */
+    -fx-background-color: #EEEEEE; /* Url of the icon */
+}
+
+#b{
+    -fx-background-image: url("../image/Calendar.png"); /* Url of the icon */
+    -fx-background-color: #EEEEEE; /* Url of the icon */
+}
+
+#c{
+    -fx-background-image: url("../image/Flag.png"); /* Url of the icon */
+    -fx-background-color: #EEEEEE; /* Url of the icon */
+    -fx-text-fill: transparent; /* Ẩn chữ */
+}
+
+#datePicker {
+    -fx-opacity: 0;
+    -fx-max-width: 0;
+    -fx-max-height: 0;
+    -fx-min-width: 0;
+    -fx-min-height: 0;
+    -fx-padding: 0;
+    -fx-margin: 0;
+}
+
+#datePicker .text-field {
+    -fx-opacity: 0;
+    -fx-max-width: 0;
+    -fx-padding: 0;
+}
+
+#listViewItems .list-cell:filled:selected {
+    -fx-background-color: #CCCCCC; /* Màu xám đậm hơn */
+    -fx-text-fill: black; /* Màu chữ đen để dễ đọc */
+}
+
+#CBBdut .arrow-button {
+    -fx-background-image: url("../image/Flag.png"); /* Đường dẫn tới ảnh */
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 40px 40px; /* Điều chỉnh kích thước icon */
+}
+
+/* Định dạng ContextMenu */
+.context-menu {
+    -fx-background-color: #eeeeee; /* Màu nền */
+    -fx-background-radius: 10px; /* Bo tròn góc */
+    -fx-border-color: #cccccc; /* Viền */
+    -fx-border-radius: 10px; /* Bo tròn viền */
+    -fx-padding: 5px; /* Khoảng cách bên trong */
+}
+
+/* Định dạng từng MenuItem */
+.menu-item {
+    -fx-background-color: transparent; /* Trong suốt mặc định */
+    -fx-text-fill: #333333; /* Màu chữ */
+    -fx-padding: 8px 20px; /* Kích thước padding */
+    -fx-font-size: 14px;
+    -fx-border-radius: 5px;
+}
+
+/* Khi hover vào MenuItem */
+.menu-item:hover {
+    -fx-background-color: #DDDDDD;
+    -fx-border-radius: 5px;
+}
+
+.list-cell {
+    -fx-padding: 5px;
+    -fx-background-color: #EEEEEE;
+    -fx-padding: 5px 0px; /* Tạo khoảng cách giữa các dòng */
+    -fx-background-insets: 0 0 5px 0;
+    -fx-border-color: #D1D1D1; /* Màu viền xám nhạt */
+    -fx-border-width: 0 0 1px 0; /* Chỉ viền dưới */
+    -fx-padding: 5px; /* Khoảng cách bên trong */
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #4CAF50; /* Màu nền khi được chọn */
+}
