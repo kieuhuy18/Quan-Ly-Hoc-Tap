@@ -41,21 +41,21 @@ public class Main extends Application {
 //        primaryStage.show();
 
         //trang chu
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/doan/HTTrangChu.fxml"));
-//        Scene scene = new Scene(loader.load());
-//        primaryStage.setTitle("Trang chu");
-//        primaryStage.setScene(scene);
-//        primaryStage.setResizable(false);
-//        primaryStage.show();
-
-        //trang todo list
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/doan/HTtodolist.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/doan/HTTrangChu.fxml"));
         Scene scene = new Scene(loader.load());
-        primaryStage.setResizable(false);
-        primaryStage.setTitle("Todo list");
+        primaryStage.setTitle("Trang chu");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
+
+        //trang todo list
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/doan/HTtodolist.fxml"));
+//        Scene scene = new Scene(loader.load());
+//        primaryStage.setResizable(false);
+//        primaryStage.setTitle("Todo list");
+//        primaryStage.setScene(scene);
+//        primaryStage.setResizable(false);
+//        primaryStage.show();
 
     }
 

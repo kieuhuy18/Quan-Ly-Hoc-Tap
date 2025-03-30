@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.doan.GUI.HTTrangChu">
+<AnchorPane maxHeight="780.0" minHeight="780.0" prefHeight="780.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.doan.GUI.HTTrangChu">
    <children>
-      <BorderPane layoutX="-1.0" layoutY="-1.0" prefHeight="1024.0" prefWidth="1440.0">
+      <BorderPane fx:id="mainPane" layoutX="-1.0" layoutY="-1.0" prefHeight="1024.0" prefWidth="1440.0">
          <top>
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
@@ -53,8 +53,8 @@
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Button" />
-                        <Button mnemonicParsing="false" text="Button" />
+                        <Button fx:id="BTtrangchu" mnemonicParsing="false" text="Button" />
+                        <Button fx:id="BTtodo" mnemonicParsing="false" onAction="#showTasks" text="Todo" />
                         <Button mnemonicParsing="false" text="Button" />
                         <Button mnemonicParsing="false" text="Button" />
                         <Button mnemonicParsing="false" text="Button" />
@@ -63,21 +63,6 @@
                   </HBox>
                </children>
             </VBox>
-         </top>
-         <right>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-         </right>
-         <center>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <children>
-                  <VBox prefHeight="586.0" prefWidth="1018.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <HBox prefHeight="420.0" prefWidth="1240.0" />
-                        <HBox prefHeight="420.0" prefWidth="1240.0" />
-                     </children>
-                  </VBox>
-               </children>
-            </AnchorPane>
-         </center></BorderPane>
+         </top></BorderPane>
    </children>
 </AnchorPane>
