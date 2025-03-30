@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 import static app.doan.DAL.DAL_CongViec.cvList;
 
@@ -57,8 +58,8 @@ public class HTtodolist {
         //ListView
         listViewItems.setItems(observableList);
         listViewItems.setCellFactory(param -> new ListCell<>() {
-            private final Image checkedIcon = new Image(getClass().getResourceAsStream("/app/doan/image/check_box.png"));
-            private final Image uncheckedIcon = new Image(getClass().getResourceAsStream("/app/doan/image/check_box_outline_blank.png"));
+            private final Image checkedIcon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/app/doan/image/check_box.png")));
+            private final Image uncheckedIcon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/app/doan/image/check_box_outline_blank.png")));
 
             private final ImageView checkedView = new ImageView(checkedIcon);
             private final ImageView uncheckedView = new ImageView(uncheckedIcon);
@@ -81,8 +82,15 @@ public class HTtodolist {
                     }
                 });
 
+                taskName.setStyle("-fx-font-size: 18px; -fx-text-fill: gray;");
+                taskDate.setStyle("-fx-font-size: 14px; -fx-text-fill: gray;");
+
                 VBox taskInfo = new VBox(taskName, taskDate);
-                taskLayout.getChildren().addAll(checkBoxLabel, taskInfo);
+                VBox checkBoxContainer = new VBox(checkBoxLabel);
+                checkBoxContainer.setAlignment(Pos.CENTER);
+                HBox.setMargin(checkBoxContainer, new Insets(5, 0, 5, 0));
+
+                taskLayout.getChildren().addAll(checkBoxContainer, taskInfo);
             }
 
             @Override
@@ -90,37 +98,13 @@ public class HTtodolist {
                 setPrefHeight(50);
                 super.updateItem(task, empty);
                 if (empty || task == null) {
-                    setText(null);
                     setGraphic(null);
                 } else {
-
-                    // Icon khi checkbox được chọn
                     checkBoxLabel.setGraphic(task.getTrangThai() ? checkedView : uncheckedView);
                     taskName.setText(task.getTenCV());
-                    taskDate.setText(task.getThoiGian() != null ? task.getThoiGian().toString() : "");
-                    setGraphic(taskLayout);
-
-                    // Ngăn ListView chọn hàng khi click vào checkbox
-//                    checkBoxLabel.setMouseTransparent(false);
-//                    checkBoxLabel.setFocusTraversable(false);
-
-                    Text taskName = new Text(task.getTenCV());
-                    taskName.setStyle("-fx-font-size: 18px; -fx-text-fill: gray;");
-                    Text taskDate = new Text();
-                    if(task.getThoiGian() == null){
-                        taskDate = new Text("");
-                    }else{
-                        taskDate = new Text(task.getThoiGian().toString());
-                    }
-                    taskDate.setStyle("-fx-font-size: 14px; -fx-text-fill: gray;");
-
-                    VBox taskInfo = new VBox(taskName, taskDate);
-
-                    VBox checkBoxContainer = new VBox(checkBoxLabel);
-                    checkBoxContainer.setAlignment(Pos.CENTER);
-                    HBox.setMargin(checkBoxContainer, new Insets(5, 0, 5, 0));
-
-                    HBox taskLayout = new HBox(10, checkBoxContainer, taskInfo);
+                    //taskDate.setText(task.getThoiGian() != null ? task.getThoiGian().toString() : "");
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    taskDate.setText(task.getThoiGian() != null ? task.getThoiGian().format(formatter) : "");
                     setGraphic(taskLayout);
                 }
             }
@@ -132,17 +116,18 @@ public class HTtodolist {
         //nut b
         LBdate.setText("Lich trong");
 
-        datePicker.setOpacity(0); // Ẩn nhưng vẫn có thể tương tác
-        datePicker.setDisable(true); // Tạm thời vô hiệu hóa
+        //An datepicker
+        datePicker.setOpacity(0);
+        datePicker.setDisable(true);
 
-        // Khi nhấn vào Button, hiển thị DatePicker
+        // hien thi lich khi chon button
         b.setOnAction(event -> {
             datePicker.setOpacity(1);
             datePicker.setDisable(false);
             datePicker.show();
         });
 
-        // Khi chọn ngày, cập nhật Button và ẩn DatePicker
+        // Cap nhat label khi chon ngay
         datePicker.setOnAction(event -> {
             d = datePicker.getValue();
             String selectedDate = datePicker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -152,6 +137,8 @@ public class HTtodolist {
         });
 
         //nut c
+
+        //setup contextMenu
         contextMenu = new ContextMenu();
 
         MenuItem item1 = new MenuItem("do u tien cao");
@@ -171,7 +158,7 @@ public class HTtodolist {
 
         contextMenu.getItems().addAll(item1, item2, item3, item4);
 
-        // Bắt sự kiện khi nhấn vào Button
+        //Xu ly su kien
         c.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             contextMenu.show(c, c.localToScreen(0, c.getHeight()).getX(),
                     c.localToScreen(0, c.getHeight()).getY());
@@ -188,5 +175,4 @@ public class HTtodolist {
 
         bllcv.them1(cv);
     }
-
 }
