@@ -81,7 +81,7 @@ public class DAL_Chuong {
     public boolean suaC(DTO_Chuong c){
         boolean result = false;
         try{
-            String SQL = "UPDATE HocPhan SET MaHocPhan = ?, TenHocPhan = ?, GiangVien = ?, LapLai = ?, MoTa = ?, TrangThai = ?, MaHocPhan = ? WHERE Email = ? ";
+            String SQL = "UPDATE HocPhan SET MaChuong= ?, TenChuong = ?, MoTa = ?, TrangThai = ?, MaHocPhan = ? WHERE MaChuong = ? ";
             conn = app.doan.DAL.DatabaseConnection.connect();
             p = conn.prepareStatement(SQL);
             p.setString(1, c.getMaChuong());

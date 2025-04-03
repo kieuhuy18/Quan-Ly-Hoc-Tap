@@ -1,6 +1,6 @@
 package app.doan.DTO;
 
-public class DTO_HocPhan {
+public class DTO_HocPhan implements HienThi {
     private String maHP;
     private String tenHP;
     private String giangVien;
@@ -76,5 +76,8 @@ public class DTO_HocPhan {
         return lapLai;
     }
 
-
+    @Override
+    public String getDisplayName() {
+        return tenHP;
+    }
 }

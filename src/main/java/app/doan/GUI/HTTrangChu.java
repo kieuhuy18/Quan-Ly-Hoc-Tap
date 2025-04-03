@@ -18,7 +18,7 @@ public class HTTrangChu {
             AnchorPane loadedPane = loader.load(); // Đổi từ BorderPane -> AnchorPane
 
             if (mainPane != null) {
-                mainPane.setCenter(loadedPane); // Giữ nguyên lệnh này
+                mainPane.setCenter(loadedPane);
             } else {
                 System.out.println("ERROR: mainPane is NULL!");
             }

@@ -1,18 +1,19 @@
 package app.doan.DTO;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-public class DTO_BaiHoc{
+public class DTO_BaiHoc implements HienThi{
     private String maBH;
     private String tenBH;
     private String ghiChu;
-    private LocalDate ngayHoc;
+    private LocalDateTime ngayHoc;
     private boolean trangThai;
     private String maChuong;
 
     public DTO_BaiHoc(){super();}
 
-    public  DTO_BaiHoc(String maBH, String tenBH, String ghiChu, LocalDate ngayHoc, boolean trangThai, String maChuong){
+    public  DTO_BaiHoc(String maBH, String tenBH, String ghiChu, LocalDateTime ngayHoc, boolean trangThai, String maChuong){
         this.maBH = maBH;
         this.tenBH = tenBH;
         this.ghiChu = ghiChu;
@@ -53,11 +54,11 @@ public class DTO_BaiHoc{
         return trangThai;
     }
 
-    public void setNgayHoc(LocalDate ngayHoc) {
+    public void setNgayHoc(LocalDateTime ngayHoc) {
         this.ngayHoc = ngayHoc;
     }
 
-    public LocalDate getNgayHoc() {
+    public LocalDateTime getNgayHoc() {
         return ngayHoc;
     }
 
@@ -67,5 +68,10 @@ public class DTO_BaiHoc{
 
     public String getMaChuong() {
         return maChuong;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return tenBH;
     }
 }

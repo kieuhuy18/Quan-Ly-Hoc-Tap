@@ -1,25 +1,17 @@
 package app.doan;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import app.doan.DTO.DTO_CongViec;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
 public class Main extends Application {
-    private static Stage primaryStage;
+    public static Stage primaryStage;
     private ObservableList<DTO_CongViec> tasks;
 
     public static void main(String[] args) {
@@ -46,17 +38,8 @@ public class Main extends Application {
         primaryStage.setTitle("Trang chu");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
+        primaryStage.setHeight(830);
         primaryStage.show();
-
-        //trang todo list
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/doan/HTtodolist.fxml"));
-//        Scene scene = new Scene(loader.load());
-//        primaryStage.setResizable(false);
-//        primaryStage.setTitle("Todo list");
-//        primaryStage.setScene(scene);
-//        primaryStage.setResizable(false);
-//        primaryStage.show();
-
     }
 
     public static void switchScene(String fxmlFile, String title) throws IOException {

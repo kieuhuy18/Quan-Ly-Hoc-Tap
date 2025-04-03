@@ -1,6 +1,6 @@
 package app.doan.DTO;
 
-public class DTO_Chuong {
+public class DTO_Chuong implements HienThi{
     private String maChuong;
     private String tenChuong;
     private String moTa;
@@ -55,5 +55,10 @@ public class DTO_Chuong {
 
     public String getMaHP() {
         return maHP;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return tenChuong;
     }
 }

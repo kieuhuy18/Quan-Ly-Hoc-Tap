@@ -1,0 +1,83 @@
+#BTtrangchu {
+-fx-background-radius: 50%;
+    -fx-min-width: 84px;
+    -fx-min-height: 84px;
+    -fx-max-width: 84px;
+    -fx-max-height: 84px;
+    -fx-background-color: #EEEEEE;
+    -fx-background-image: url("../image/Home.png");
+    -fx-graphic-text-gap: 0;
+    -fx-background-size: 40px 40px;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#BTtodo{
+-fx-background-radius: 50%;
+    -fx-min-width: 84px;
+    -fx-min-height: 84px;
+    -fx-max-width: 84px;
+    -fx-max-height: 84px;
+    -fx-background-color: #EEEEEE;
+    -fx-background-image: url("../image/Checksquare.png");
+    -fx-graphic-text-gap: 0;
+    -fx-background-size: 40px 40px;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#BTpomo {
+-fx-background-radius: 50%;
+    -fx-min-width: 84px;
+    -fx-min-height: 84px;
+    -fx-max-width: 84px;
+    -fx-max-height: 84px;
+    -fx-background-color: #EEEEEE;
+    -fx-background-image: url("../image/Clock.png");
+    -fx-graphic-text-gap: 0;
+    -fx-background-size: 40px 40px;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#BTlich {
+-fx-background-radius: 50%;
+    -fx-min-width: 84px;
+    -fx-min-height: 84px;
+    -fx-max-width: 84px;
+    -fx-max-height: 84px;
+    -fx-background-color: #EEEEEE;
+    -fx-background-image: url("../image/Calendar.png");
+    -fx-graphic-text-gap: 0;
+    -fx-background-size: 40px 40px;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#BTthongke {
+-fx-background-radius: 50%;
+    -fx-min-width: 84px;
+    -fx-min-height: 84px;
+    -fx-max-width: 84px;
+    -fx-max-height: 84px;
+    -fx-background-color: #EEEEEE;
+    -fx-background-image: url("../image/Barchart.png");
+    -fx-graphic-text-gap: 0;
+    -fx-background-size: 40px 40px;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#BTtaikhoan {
+-fx-background-radius: 50%;
+    -fx-min-width: 84px;
+    -fx-min-height: 84px;
+    -fx-max-width: 84px;
+    -fx-max-height: 84px;
+    -fx-background-color: #EEEEEE;
+    -fx-background-image: url("../image/person.png");
+    -fx-graphic-text-gap: 0;
+    -fx-background-size: 40px 40px;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}

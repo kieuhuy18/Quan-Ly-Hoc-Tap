@@ -6,148 +6,189 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="780.0" prefWidth="1440.0" stylesheets="@style/HTTodoList.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.doan.GUI.HTtodolist">
+<AnchorPane minHeight="500.0" prefHeight="500.0" prefWidth="1440.0" style="-fx-background-color: D9D9D9;" stylesheets="@style/HTTodoList.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.doan.GUI.HTtodolist">
    <styleClass>
       <String fx:value="arrow-button" />
       <String fx:value="date-picker" />
    </styleClass>
    <children>
-      <VBox layoutX="-1.0" prefHeight="780.0" prefWidth="1440.0" style="-fx-background-color: EEEEEE; -fx-background-radius: 40;">
+      <VBox prefHeight="500.0" prefWidth="1450.0" style="-fx-background-color: D9D9D9;">
          <children>
-            <HBox prefHeight="562.0" prefWidth="1083.0">
+            <HBox prefHeight="580.0" prefWidth="1440.0">
                <children>
-                  <VBox prefHeight="556.0" prefWidth="425.0">
+                  <VBox maxHeight="506.0" maxWidth="270.0" minHeight="479.0" minWidth="242.0" prefHeight="500.0" prefWidth="269.0" style="-fx-background-radius: 40; -fx-background-color: EEEEEE;">
+                     <HBox.margin>
+                        <Insets left="22.0" right="12.0" />
+                     </HBox.margin>
                      <children>
-                        <HBox prefHeight="50.0" prefWidth="200.0">
-                           <children>
-                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@image/List.png" />
-                                 </image>
-                                 <HBox.margin>
-                                    <Insets left="36.0" top="5.0" />
-                                 </HBox.margin>
-                              </ImageView>
-                              <Label text="Đã lên kế hoạch">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="12.0" top="8.0" />
-                                 </HBox.margin>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="50.0" prefWidth="200.0">
-                           <children>
-                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <HBox.margin>
-                                    <Insets left="36.0" top="5.0" />
-                                 </HBox.margin>
-                                 <image>
-                                    <Image url="@image/today.png" />
-                                 </image>
-                              </ImageView>
-                              <Label text="Hôm nay">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="12.0" top="8.0" />
-                                 </HBox.margin>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="50.0" prefWidth="200.0">
-                           <children>
-                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@image/Check.png" />
-                                 </image>
-                                 <HBox.margin>
-                                    <Insets left="36.0" top="5.0" />
-                                 </HBox.margin>
-                              </ImageView>
-                              <Label text="Hoàn thành">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="12.0" top="8.0" />
-                                 </HBox.margin>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="50.0" prefWidth="200.0">
-                           <children>
-                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@image/icon _clock.png" />
-                                 </image>
-                                 <HBox.margin>
-                                    <Insets left="36.0" top="5.0" />
-                                 </HBox.margin>
-                              </ImageView>
-                              <Label text="Quá hạn">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="12.0" top="8.0" />
-                                 </HBox.margin>
-                              </Label>
-                           </children>
-                        </HBox>
+                        <ScrollPane prefHeight="421.0" prefWidth="270.0" style="-fx-background-color: EEEEEE;">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="427.0" prefWidth="270.0" style="-fx-background-color: EEEEEE;">
+                                 <children>
+                                    <VBox prefHeight="429.0" prefWidth="258.0" style="-fx-background-color: EEEEEE;">
+                                       <children>
+                                          <HBox fx:id="HBtoday" prefHeight="50.0" prefWidth="200.0">
+                                             <children>
+                                                <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                                                   <HBox.margin>
+                                                      <Insets left="36.0" top="5.0" />
+                                                   </HBox.margin>
+                                                   <image>
+                                                      <Image url="@image/today.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label text="Hôm nay">
+                                                   <font>
+                                                      <Font size="20.0" />
+                                                   </font>
+                                                   <HBox.margin>
+                                                      <Insets left="12.0" top="8.0" />
+                                                   </HBox.margin>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox fx:id="HBplan" prefHeight="50.0" prefWidth="200.0">
+                                             <children>
+                                                <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@image/List.png" />
+                                                   </image>
+                                                   <HBox.margin>
+                                                      <Insets left="36.0" top="5.0" />
+                                                   </HBox.margin>
+                                                </ImageView>
+                                                <Label text="Đã lên kế hoạch">
+                                                   <font>
+                                                      <Font size="20.0" />
+                                                   </font>
+                                                   <HBox.margin>
+                                                      <Insets left="12.0" top="8.0" />
+                                                   </HBox.margin>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox fx:id="HBdone" prefHeight="50.0" prefWidth="200.0">
+                                             <children>
+                                                <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@image/Check.png" />
+                                                   </image>
+                                                   <HBox.margin>
+                                                      <Insets left="36.0" top="5.0" />
+                                                   </HBox.margin>
+                                                </ImageView>
+                                                <Label text="Hoàn thành">
+                                                   <font>
+                                                      <Font size="20.0" />
+                                                   </font>
+                                                   <HBox.margin>
+                                                      <Insets left="12.0" top="8.0" />
+                                                   </HBox.margin>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox fx:id="HBoverdate" prefHeight="50.0" prefWidth="200.0">
+                                             <children>
+                                                <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@image/icon _clock.png" />
+                                                   </image>
+                                                   <HBox.margin>
+                                                      <Insets left="36.0" top="5.0" />
+                                                   </HBox.margin>
+                                                </ImageView>
+                                                <Label text="Quá hạn">
+                                                   <font>
+                                                      <Font size="20.0" />
+                                                   </font>
+                                                   <HBox.margin>
+                                                      <Insets left="12.0" top="8.0" />
+                                                   </HBox.margin>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <Line endX="164.1289520263672" endY="-4.192102909088135" startX="-45.56394958496094" startY="-4.192102909088135">
+                                             <VBox.margin>
+                                                <Insets left="26.0" />
+                                             </VBox.margin>
+                                          </Line>
+                                          <TreeView fx:id="treeView" prefHeight="224.0" prefWidth="258.0">
+                                             <VBox.margin>
+                                                <Insets left="22.0" right="12.0" top="3.0" />
+                                             </VBox.margin></TreeView>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                           <VBox.margin>
+                              <Insets top="35.0" />
+                           </VBox.margin>
+                        </ScrollPane>
                      </children>
                   </VBox>
-                  <VBox prefHeight="556.0" prefWidth="1239.0">
+                  <VBox maxHeight="570.0" prefHeight="485.0" prefWidth="1112.0" style="-fx-background-color: EEEEEE; -fx-background-radius: 40;">
                      <children>
-                        <HBox prefHeight="50.0" prefWidth="200.0">
+                        <HBox maxHeight="150.0" minHeight="120.0" prefHeight="150.0" prefWidth="1122.0">
                            <children>
-                              <Button fx:id="a" mnemonicParsing="false" onAction="#handleButtonA" prefHeight="45.0" prefWidth="45.0">
+                              <Button fx:id="a" mnemonicParsing="false" onAction="#handleButtonA" prefHeight="40.0" prefWidth="40.0">
                                  <HBox.margin>
-                                    <Insets left="33.0" right="17.0" top="3.0" />
+                                    <Insets left="33.0" right="17.0" top="43.0" />
                                  </HBox.margin>
                               </Button>
-                              <TextField fx:id="TFthem" prefHeight="47.0" prefWidth="687.0" style="-fx-background-color: E8E8E8;">
+                              <TextField fx:id="TFthem" prefHeight="50.0" prefWidth="699.0" style="-fx-background-color: E8E8E8;">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                                  <HBox.margin>
-                                    <Insets right="5.0" top="3.0" />
+                                    <Insets right="5.0" top="43.0" />
                                  </HBox.margin>
                               </TextField>
-                              <Label fx:id="LBdate" prefWidth="110.0">
+                              <Label fx:id="LBdate" alignment="CENTER" prefHeight="30.0" prefWidth="159.0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                                  <HBox.margin>
-                                    <Insets top="12.0" />
+                                    <Insets left="5.0" top="50.0" />
                                  </HBox.margin>
                               </Label>
-                              <Button fx:id="b" mnemonicParsing="false" prefHeight="46.0" prefWidth="48.0" stylesheets="@style/HTTodoList.css">
-                                 <HBox.margin>
-                                    <Insets right="21.0" top="3.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button fx:id="c" mnemonicParsing="false" prefHeight="46.0" prefWidth="48.0" stylesheets="@style/HTTodoList.css" />
                               <DatePicker fx:id="datePicker" opacity="0.0" prefHeight="0.0" prefWidth="0.0" stylesheets="@style/HTTodoList.css" visible="false">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
                               </DatePicker>
+                              <Button fx:id="b" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" stylesheets="@style/HTTodoList.css">
+                                 <HBox.margin>
+                                    <Insets left="20.0" top="43.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="c" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" stylesheets="@style/HTTodoList.css">
+                                 <HBox.margin>
+                                    <Insets left="20.0" right="48.0" top="43.0" />
+                                 </HBox.margin>
+                              </Button>
                            </children>
                         </HBox>
-                        <ListView fx:id="listViewItems" prefHeight="428.0" prefWidth="1136.0" style="-fx-background-color: EEEEEE;" />
+                        <ListView fx:id="listViewItems" prefHeight="596.0" prefWidth="1049.0" style="-fx-background-color: EEEEEE;">
+                           <VBox.margin>
+                              <Insets left="43.0" right="43.0" />
+                           </VBox.margin>
+                        </ListView>
                      </children>
+                     <HBox.margin>
+                        <Insets right="22.0" />
+                     </HBox.margin>
                   </VBox>
                </children>
             </HBox>

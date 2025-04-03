@@ -16,6 +16,8 @@ public class DAL_CongViec {
     public Statement stm = null;
     public static PreparedStatement p = null;
     public static ArrayList<DTO_CongViec> cvList = new ArrayList<DTO_CongViec>();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    public DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HH:mm");
 
     public ArrayList<DTO_CongViec> getallCVlist(){
         try{
@@ -29,10 +31,9 @@ public class DAL_CongViec {
                 DTO_CongViec cv = new DTO_CongViec();
                 cv.setMaCV(rs.getString("MaCongViec"));
                 cv.setTenCV(rs.getString("TenCongViec"));
-                if(Objects.equals(rs.getString("ThoiGian"), "trong")){
+                if("trong".equals(rs.getString("ThoiGian"))){
                     cv.setThoiGian(null);
                 }else {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                     LocalDate date = LocalDate.parse(rs.getString("ThoiGian"), formatter);
                     cv.setThoiGian(date);
                 }
@@ -41,10 +42,9 @@ public class DAL_CongViec {
                 cv.setPomoTT(rs.getInt("pomoTT"));
                 cv.setTrangThai(rs.getBoolean("TrangThai"));
                 cv.setDoUuTien(rs.getInt("DoUuTien"));
-                DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HH:mm");
                 String thoiGianBatDauStr = rs.getString("ThoiGianBatDau");
                 if(Objects.equals(thoiGianBatDauStr, null)){
-                    cv.setThoiGian(null);
+                    cv.setThoiGianBatDau(null);
                 }else {
                     LocalTime time =  LocalTime.parse(thoiGianBatDauStr, formatter1);
                     cv.setThoiGianBatDau(time);
@@ -90,7 +90,7 @@ public class DAL_CongViec {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 p.setString(3, cv.getThoiGian().format(formatter));
             } else {
-                p.setString(3, "trong"); // Hoặc Types.DATE nếu cột là kiểu DATE
+                p.setString(3, "trong");
             }
             p.setString(4, cv.getGhiChu());
             p.setInt(5, cv.getPomoUT());
@@ -101,7 +101,7 @@ public class DAL_CongViec {
                 DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HH:mm");
                 p.setString(9, cv.getThoiGianBatDau().format(formatter1));
             } else {
-                p.setNull(9, Types.VARCHAR); // Hoặc Types.TIME nếu cột là kiểu TIME
+                p.setNull(9, Types.VARCHAR);
             }
             p.setString(10, cv.getMaBH());
             if(p.executeUpdate() >= 1){
@@ -123,17 +123,23 @@ public class DAL_CongViec {
             p = conn.prepareStatement(SQL);
             p.setString(1, cv.getMaCV());
             p.setString(2, cv.getTenCV());
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String cvtg = cv.getThoiGian().format(formatter);
-            p.setString(3, cvtg);
+            if (cv.getThoiGian() != null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                p.setString(3, cv.getThoiGian().format(formatter));
+            } else {
+                p.setString(3, "trong");
+            }
             p.setString(4, cv.getGhiChu());
             p.setInt(5, cv.getPomoUT());
             p.setInt(6, cv.getPomoTT());
             p.setBoolean(7, cv.getTrangThai());
             p.setInt(8, cv.getDoUuTien());
-            DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HH:mm");
-            String tgbd = cv.getThoiGianBatDau().format(formatter1);
-            p.setString(9, tgbd);
+            if (cv.getThoiGianBatDau() != null) {
+                DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HH:mm");
+                p.setString(9, cv.getThoiGianBatDau().format(formatter1));
+            } else {
+                p.setNull(9, Types.VARCHAR);
+            }
             p.setString(10, cv.getMaBH());
             p.setString(11, cv.getMaCV());
             p.executeUpdate();
@@ -148,7 +154,7 @@ public class DAL_CongViec {
         return result;
     }
 
-    public DTO_CongViec timtheomahp(String cv){
+    public DTO_CongViec timtheomacv(String cv){
         try{
             String sql = "SELECT * FROM CongViec WHERE MaCongViec=?";
             conn = app.doan.DAL.DatabaseConnection.connect();
@@ -157,17 +163,25 @@ public class DAL_CongViec {
             ResultSet rs = p.executeQuery();
             if(rs.next()){
                 String ten = rs.getString("TenCongViec");
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                LocalDate tg = LocalDate.parse(rs.getString("ThoiGian"), formatter);
+                LocalDate date = null;
+                if("trong".equals(rs.getString("ThoiGian"))){
+                    date = null;
+                }else {
+                    date = LocalDate.parse(rs.getString("ThoiGian"), formatter);
+                }
                 String ghichu = rs.getString("GhiChu");
                 int UT = rs.getInt("pomoUT");
                 int TT = rs.getInt("pomoTT");
                 boolean trangthai = rs.getBoolean("TrangThai");
                 int dut = rs.getInt("DoUuTien");
-                DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HH:mm");
-                LocalTime time = LocalTime.parse(rs.getString("ThoiGianBatDau"), formatter1);
-                String maTK = rs.getString("MaBH");
-                return new DTO_CongViec(cv, ten, ghichu, tg, UT, TT, trangthai, dut, time, maTK);
+                LocalTime time = null;
+                if(Objects.equals(rs.getString("ThoiGianBatDau"), null)){
+                    time = null;
+                }else {
+                    time =  LocalTime.parse(rs.getString("ThoiGianBatDau"), formatter1);
+                }
+                String maBH = rs.getString("MaBH");
+                return new DTO_CongViec(cv, ten, ghichu, date, UT, TT, trangthai, dut, time, maBH);
             }
         }catch(SQLException ex){
             System.out.println(ex);
@@ -188,17 +202,25 @@ public class DAL_CongViec {
             while(rs.next()){
                 String macv = rs.getString("MaCongViec");
                 String tencv = rs.getString("TenCongViec");
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                LocalDate tg = LocalDate.parse(rs.getString("ThoiGian"), formatter);
+                LocalDate date = null;
+                if("trong".equals(rs.getString("ThoiGian"))){
+                    date = null;
+                }else {
+                    date = LocalDate.parse(rs.getString("ThoiGian"), formatter);
+                }
                 String ghichu = rs.getString("GhiChu");
                 int UT = rs.getInt("pomoUT");
                 int TT = rs.getInt("pomoTT");
                 boolean trangthai = rs.getBoolean("TrangThai");
                 int dut = rs.getInt("DoUuTien");
-                DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HH:mm");
-                LocalTime time = LocalTime.parse(rs.getString("ThoiGianBatDau"), formatter1);
-                String maTK = rs.getString("MaBH");
-                DTO_CongViec cv = new DTO_CongViec(macv, tencv, ghichu, tg, UT, TT, trangthai, dut, time, maTK);
+                LocalTime time = null;
+                if(Objects.equals(rs.getString("ThoiGianBatDau"), null)){
+                    time = null;
+                }else {
+                    time =  LocalTime.parse(rs.getString("ThoiGianBatDau"), formatter1);
+                }
+                String maBH = rs.getString("MaBH");
+                DTO_CongViec cv = new DTO_CongViec(macv, tencv, ghichu, date, UT, TT, trangthai, dut, time, maBH);
                 cvList.add(cv);
             }
         }catch(SQLException ex){

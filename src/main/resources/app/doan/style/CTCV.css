@@ -1,0 +1,84 @@
+#BTcheck{
+    -fx-background-image: url("../image/check_box_outline_blank.png");
+    -fx-background-color: #EEEEEE;
+}
+
+#BTcheck.toggled {
+    -fx-background-image: url("../image/check_box.png");
+}
+
+#BTtime{
+    -fx-background-image: url("../image/Play.png");
+    -fx-background-color: #EEEEEE;
+    -fx-background-size: 40px 40px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+#TXTtieude{
+    -fx-font-size: 15px;
+}
+
+#displayLabe{
+    -fx-font-size: 15px;
+}
+
+#BTdate{
+    -fx-background-image: url("../image/Calendar.png");
+    -fx-background-color: #EEEEEE;
+    -fx-background-size: 40px 40px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+#datePicker {
+    -fx-opacity: 0;
+    -fx-max-width: 0;
+    -fx-max-height: 0;
+    -fx-min-width: 0;
+    -fx-min-height: 0;
+    -fx-padding: 0;
+    -fx-margin: 0;
+}
+
+#datePicker .text-field {
+    -fx-opacity: 0;
+    -fx-max-width: 0;
+    -fx-padding: 0;
+}
+
+#BTdut{
+    -fx-background-image: url("../image/Flag.png");
+    -fx-background-color: #EEEEEE;
+    -fx-background-size: 40px 40px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+/* Định dạng ContextMenu */
+.context-menu {
+    -fx-background-color: #eeeeee;
+    -fx-background-radius: 10px;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 10px;
+    -fx-padding: 5px;
+}
+
+/* Định dạng từng MenuItem */
+.menu-item {
+    -fx-background-color: transparent;
+    -fx-text-fill: #333333;
+    -fx-padding: 8px 20px;
+    -fx-font-size: 14px;
+    -fx-border-radius: 5px;
+}
+
+/* Khi hover vào MenuItem */
+.menu-item:hover {
+    -fx-background-color: #DDDDDD;
+    -fx-border-radius: 5px;
+}
+
+.text-area .content {
+    -fx-background-color: #EEEEEE; /* Đổi màu nền nhập liệu */
+}
