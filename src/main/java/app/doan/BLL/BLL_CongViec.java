@@ -5,6 +5,7 @@ import app.doan.DTO.DTO_CongViec;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static app.doan.DAL.DAL_CongViec.cvList;
 
@@ -57,13 +58,27 @@ public class BLL_CongViec {
         for(DTO_CongViec cv:cvList){
             if(cv.getThoiGian() != null && LocalDate.now().equals(cv.getThoiGian())){
                 today.add(cv);
-            }if(cv.getThoiGian() != null){
+            }if(cv.getThoiGian() != null && !cv.getTrangThai()){
                 plan.add(cv);
             }if(cv.getTrangThai()){
                 done.add(cv);
-            }if(cv.getThoiGian() != null && cv.getThoiGian().isBefore(LocalDate.now())){
+            }if(cv.getThoiGian() != null && cv.getThoiGian().isBefore(LocalDate.now()) && !cv.getTrangThai()){
                 overdate.add(cv);
             }
         }
+    }
+
+    public DTO_CongViec tim(String ma){
+        tailist();
+        for(DTO_CongViec cv : cvList){
+            if(Objects.equals(cv.getMaCV(), ma)){
+                return cv;
+            }
+        }
+        return null;
+    }
+
+    public boolean sua(DTO_CongViec cv){
+        return dalcv.suaCV(cv);
     }
 }

@@ -1,14 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.sgu.doan.Pomodoro"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="500.0" prefWidth="1440.0" style="-fx-background-color: D9D9D9;" stylesheets="@style/Pomodoro.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.doan.GUI.Pomodoro">
+   <children>
+      <HBox prefHeight="500.0" prefWidth="1440.0">
+         <children>
+            <VBox prefHeight="500.0" prefWidth="910.0">
+               <children>
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <Circle fill="#d9d9d9" radius="150.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0">
+                           <StackPane.margin>
+                              <Insets top="60.0" />
+                           </StackPane.margin>
+                        </Circle>
+                        <Text fx:id="TXTtimer" strokeType="OUTSIDE" strokeWidth="0.0" text="25:00">
+                           <StackPane.margin>
+                              <Insets top="70.0" />
+                           </StackPane.margin>
+                           <font>
+                              <Font size="40.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </StackPane>
+                  <Button fx:id="BTtimer" mnemonicParsing="false" onAction="#handleDecrease25Min" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: EEEEEE; -fx-background-radius: 15;" text="Bắt đầu">
+                     <VBox.margin>
+                        <Insets left="360.0" top="45.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+            <VBox prefHeight="500.0" prefWidth="530.0">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <children>
+                  <HBox maxHeight="55.0" maxWidth="468.0" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: EEEEEE; -fx-background-radius: 20;">
+                     <VBox.margin>
+                        <Insets bottom="25.0" right="58.0" top="28.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label fx:id="LBcheck" minHeight="48.0" minWidth="48.0">
+                           <HBox.margin>
+                              <Insets left="10.0" top="4.0" />
+                           </HBox.margin>
+                           <graphic>
+                              <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic></Label>
+                        <Label fx:id="LBcv" prefHeight="30.0" prefWidth="352.0" text="Label">
+                           <HBox.margin>
+                              <Insets left="15.0" top="10.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <VBox prefHeight="317.0" prefWidth="530.0" style="-fx-background-color: EEEEEE; -fx-background-radius: 20;">
+                     <VBox.margin>
+                        <Insets bottom="25.0" right="58.0" top="28.0" />
+                     </VBox.margin>
+                     <children>
+                        <ListView fx:id="listViewItems" prefHeight="301.0" prefWidth="472.0" style="-fx-background-radius: 20; -fx-background-color: EEEEEE;">
+                           <VBox.margin>
+                              <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
+                           </VBox.margin></ListView>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
 </AnchorPane>

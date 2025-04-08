@@ -5,9 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import app.doan.DTO.DTO_CongViec;
-
 import java.io.IOException;
 
 public class Main extends Application {
@@ -23,30 +21,21 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
-
-        //màn hinh dang nhap
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/doan/HTDangNhap.fxml"));
-//        Scene scene = new Scene(loader.load());
-//        primaryStage.setTitle("Dang Nhap");
-//        primaryStage.setScene(scene);
-//        primaryStage.setResizable(false);
-//        primaryStage.show();
-
-        //trang chu
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/doan/HTDangNhap.fxml"));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/doan/HTTrangChu.fxml"));
         Scene scene = new Scene(loader.load());
-        primaryStage.setTitle("Trang chu");
+        primaryStage.setTitle("Dang Nhap");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
-        primaryStage.setHeight(830);
         primaryStage.show();
     }
 
     public static void switchScene(String fxmlFile, String title) throws IOException {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/app/doan/" + fxmlFile));
-        Scene scene = new Scene(loader.load(), 1280, 720);
+        Scene scene = new Scene(loader.load());
         primaryStage.setTitle(title);
         primaryStage.setScene(scene);
+        primaryStage.setHeight(830);
         primaryStage.setResizable(false);
     }
 }

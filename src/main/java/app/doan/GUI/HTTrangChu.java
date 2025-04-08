@@ -2,23 +2,46 @@ package app.doan.GUI;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
+
+import static app.doan.GUI.Pomodoro.isRunning;
 
 public class HTTrangChu {
+    @FXML
+    private Button BTtrangchu;
+
+    @FXML
+    private Button BTtodo;
+
+    @FXML
+    private Button BTpomo;
+
+    @FXML
+    private Button BTtaikhoan;
+
     @FXML
     public BorderPane mainPane;
 
     public void loadView(String fxmlFile) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-            AnchorPane loadedPane = loader.load(); // Đổi từ BorderPane -> AnchorPane
+            AnchorPane loadedPane = loader.load();
 
             if (mainPane != null) {
                 mainPane.setCenter(loadedPane);
+
+                if (fxmlFile.equals("/app/doan/HTtodolist.fxml")) {
+                    HTtodolist htTodolistController = loader.getController();
+                    htTodolistController.setMainController(this);
+                }
             } else {
                 System.out.println("ERROR: mainPane is NULL!");
             }
@@ -27,15 +50,39 @@ public class HTTrangChu {
         }
     }
 
-//    public void showHome() {
-//        loadView("/app/doan/home.fxml");
-//    }
+    public void showPomo() {
+        loadView("/app/doan/HTPomodoro.fxml");
+    }
 
-    public void showTasks() {
+    public void showCV() {
         loadView("/app/doan/HTtodolist.fxml");
     }
 
-    public void showSettings() {
-        loadView("/app/doan/settings.fxml");
+    public void showTK() {
+        loadView("/app/doan/HTNguoiDung.fxml");
+    }
+
+    public void showTrangChu() {
+        loadView("/app/doan/HTTrangChu.fxml");
+    }
+
+    @FXML
+    public void initialize(){
+        BTtrangchu.setOnAction(actionEvent -> {
+            System.out.println(isRunning);
+            if(isRunning){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Xác nhận");
+                alert.setHeaderText("Bạn muốn tạm dừng Pomodoro");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK){
+                    showTrangChu();
+                }
+            }
+            else{
+                showTrangChu();
+            }
+        });
     }
 }

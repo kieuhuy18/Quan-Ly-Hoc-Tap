@@ -56,25 +56,17 @@
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="BTtrangchu" mnemonicParsing="false">
+                        <Button fx:id="BTtrangchu" maxHeight="60.0" maxWidth="60.0" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0">
                            <HBox.margin>
-                              <Insets left="268.0" right="80.0" />
+                              <Insets left="334.0" right="152.0" />
                            </HBox.margin></Button>
-                        <Button fx:id="BTtodo" mnemonicParsing="false" onAction="#showTasks">
+                        <Button fx:id="BTtodo" mnemonicParsing="false" onAction="#showCV">
                            <HBox.margin>
-                              <Insets right="80.0" />
+                              <Insets right="152.0" />
                            </HBox.margin></Button>
-                        <Button fx:id="BTpomo" mnemonicParsing="false">
+                        <Button fx:id="BTpomo" mnemonicParsing="false" onAction="#showPomo">
                            <HBox.margin>
-                              <Insets right="80.0" />
-                           </HBox.margin></Button>
-                        <Button fx:id="BTlich" mnemonicParsing="false">
-                           <HBox.margin>
-                              <Insets right="80.0" />
-                           </HBox.margin></Button>
-                        <Button fx:id="BTthongke" mnemonicParsing="false">
-                           <HBox.margin>
-                              <Insets right="80.0" />
+                              <Insets right="152.0" />
                            </HBox.margin></Button>
                         <Button fx:id="BTtaikhoan" mnemonicParsing="false" />
                      </children>
@@ -86,16 +78,9 @@
             </VBox>
          </top>
          <center>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <children>
-                  <ImageView fitHeight="310.0" fitWidth="413.0" layoutX="14.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@image/TC1.jpg" />
-                     </image>
-                  </ImageView>
-               </children>
+            <AnchorPane prefHeight="494.0" prefWidth="1440.0" BorderPane.alignment="CENTER">
                <BorderPane.margin>
-                  <Insets top="60.0" />
+                  <Insets top="20.0" />
                </BorderPane.margin>
             </AnchorPane>
          </center></BorderPane>

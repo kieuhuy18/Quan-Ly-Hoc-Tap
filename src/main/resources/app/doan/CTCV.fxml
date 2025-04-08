@@ -36,13 +36,13 @@
                         <ImageView fx:id="imageView" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
                      </graphic>
                      <HBox.margin>
-                        <Insets left="16.0" right="20.0" />
+                        <Insets left="16.0" right="20.0" top="5.0" />
                      </HBox.margin>
                   </Label>
                   <StackPane fx:id="container" prefHeight="48.0" prefWidth="717.0">
                      <children>
                         <TextField fx:id="TXTtieude" prefHeight="46.0" prefWidth="347.0" />
-                        <Label fx:id="displayLabel" prefHeight="43.0" prefWidth="718.0">
+                        <Label fx:id="displayLabel1" prefHeight="43.0" prefWidth="718.0">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -54,7 +54,7 @@
                   </StackPane>
                   <Button fx:id="BTtime" mnemonicParsing="false" prefHeight="48.0" prefWidth="48.0">
                      <HBox.margin>
-                        <Insets left="90.0" right="18.0" />
+                        <Insets left="70.0" right="18.0" />
                      </HBox.margin>
                   </Button>
                </children>
@@ -85,6 +85,11 @@
                               <Insets top="12.0" />
                            </HBox.margin></Button>
                         <DatePicker fx:id="datePicker" prefWidth="175.0" />
+                        <Button fx:id="BTcancel" minHeight="40.0" minWidth="40.0" mnemonicParsing="false">
+                           <HBox.margin>
+                              <Insets left="20.0" top="12.0" />
+                           </HBox.margin>
+                        </Button>
                      </children>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0">
@@ -96,7 +101,7 @@
                            <HBox.margin>
                               <Insets left="30.0" top="15.0" />
                            </HBox.margin></Label>
-                        <Label fx:id="LBdut" prefHeight="30.0" prefWidth="94.0" text="Label">
+                        <Label fx:id="LBdut" prefHeight="30.0" prefWidth="257.0" text="Label">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -118,10 +123,18 @@
                            <HBox.margin>
                               <Insets left="30.0" top="15.0" />
                            </HBox.margin></Label>
-                        <TextField prefHeight="26.0" prefWidth="40.0">
+                        <StackPane prefHeight="23.0" prefWidth="40.0">
                            <HBox.margin>
-                              <Insets top="15.0" />
-                           </HBox.margin></TextField>
+                              <Insets bottom="15.0" top="15.0" />
+                           </HBox.margin>
+                           <children>
+                              <Label fx:id="displayLabel2" prefHeight="30.0" prefWidth="48.0" text="Label">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </StackPane>
                         <Label text="/">
                            <font>
                               <Font size="20.0" />
@@ -129,10 +142,23 @@
                            <HBox.margin>
                               <Insets top="15.0" />
                            </HBox.margin></Label>
-                        <TextField prefHeight="26.0" prefWidth="40.0">
+                        <StackPane prefHeight="150.0" prefWidth="40.0">
                            <HBox.margin>
-                              <Insets top="15.0" />
-                           </HBox.margin></TextField>
+                              <Insets bottom="15.0" top="15.0" />
+                           </HBox.margin>
+                           <children>
+                              <Label fx:id="displayLabel3" text="Label">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="TXTut">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </StackPane>
                         <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@image/tomato.png" />
@@ -157,7 +183,7 @@
                      <VBox.margin>
                         <Insets left="30.0" top="15.0" />
                      </VBox.margin></Label>
-                  <TextArea prefHeight="202.0" prefWidth="939.0" style="-fx-background-color: EEEEEE;" />
+                  <TextArea fx:id="TAghichu" prefHeight="202.0" prefWidth="939.0" style="-fx-background-color: EEEEEE;" />
                </children>
             </VBox>
          </children>

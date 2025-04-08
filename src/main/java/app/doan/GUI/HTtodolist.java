@@ -19,8 +19,8 @@ import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Objects;
 
 import static app.doan.BLL.BLL_CongViec.*;
 import static app.doan.DAL.DAL_BaiHoc.bhList;
@@ -44,9 +43,11 @@ public class HTtodolist {
     private final BLL_HocPhan bllhp = new BLL_HocPhan();
     private final BLL_Chuong bllc = new BLL_Chuong();
     private final BLL_BaiHoc bllbh = new BLL_BaiHoc();
-    ObservableList<DTO_CongViec> observableList = FXCollections.observableArrayList(cvList);
+    static ObservableList<DTO_CongViec> observableList = FXCollections.observableArrayList(cvList);
     private LocalDate d;
     private int dut = 0;
+    private static int list = 1;
+    public static String cvht;
 
     private ContextMenu contextMenu;
 
@@ -86,52 +87,80 @@ public class HTtodolist {
     @FXML
     private TreeView<HienThi> treeView;
 
+    private HTTrangChu htTrangChu;
+
+    public void setMainController(HTTrangChu controller) {
+        this.htTrangChu = controller;
+    }
+
     @FXML
     public void initialize() {
+        //setup
         List<HBox> hboxList = List.of(HBtoday, HBplan, HBdone, HBoverdate);
-
         bllhp.tailist();
         bllc.tailist();
         bllbh.tailist();
         setupTreeView(hpList);
 
-        loadListView(1);
+        //listview
+        loadListView(list);
         listViewItems.setItems(observableList);
-        listViewItems.setCellFactory(param -> new ListCell<>() {
-            private final Image checkedIcon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/app/doan/image/check_box.png")));
-            private final Image uncheckedIcon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/app/doan/image/check_box_outline_blank.png")));
-            private final ImageView checkedView = new ImageView(checkedIcon);
-            private final ImageView uncheckedView = new ImageView(uncheckedIcon);
+        listViewItems.setCellFactory(param -> new ListCell<>() { //setup tung dong trong listview
             private final Label checkBoxLabel = new Label();
             private final Text taskName = new Text();
             private final Text taskDate = new Text();
             private final HBox taskLayout = new HBox(10);
-
+            private final Button pomoButton = new Button();
             {
-                checkedView.setFitWidth(40);
-                checkedView.setFitHeight(40);
-                uncheckedView.setFitWidth(40);
-                uncheckedView.setFitHeight(40);
-
+                //Xu ly su kien khi chon vao o checkbox
                 checkBoxLabel.setOnMouseClicked(event -> {
                     DTO_CongViec task = getItem();
-                    if (task != null) {
-                        task.setTrangThai(!task.getTrangThai());
-                        checkBoxLabel.setGraphic(task.getTrangThai() ? checkedView : uncheckedView);
-                    }
+                    task.setTrangThai(!task.getTrangThai());
+                    String color = switch (task.getDoUuTien()) {
+                        case 1 -> "red";
+                        case 2 -> "orange";
+                        case 3 -> "green";
+                        default -> "default";
+                    };
+                    String state = task.getTrangThai() ? "checked" : "unchecked";
+                    checkBoxLabel.setGraphic(IconProvider.getIcon(state + "_" + color));
+                    bllcv.sua(task);
                 });
 
                 taskName.setStyle("-fx-font-size: 18px; -fx-text-fill: gray;");
-                taskDate.setStyle("-fx-font-size: 14px; -fx-text-fill: gray;");
-
+                taskDate.setStyle("-fx-font-size: 14px;");
                 VBox taskInfo = new VBox(taskName, taskDate);
                 VBox checkBoxContainer = new VBox(checkBoxLabel);
                 checkBoxContainer.setAlignment(Pos.CENTER);
                 HBox.setMargin(checkBoxContainer, new Insets(5, 0, 5, 0));
 
-                taskLayout.getChildren().addAll(checkBoxContainer, taskInfo);
+                Region spacer = new Region();
+                HBox.setHgrow(spacer, Priority.ALWAYS);
+                ImageView pomoIcon = new ImageView(new Image(String.valueOf(getClass().getResource("/app/doan/image/Play.png"))));
+                pomoIcon.setFitWidth(40);
+                pomoIcon.setFitHeight(40);
+                pomoButton.setGraphic(pomoIcon);
+                pomoButton.setStyle("-fx-background-color: transparent;");
+                pomoButton.setPrefSize(30, 30);
+
+                pomoButton.setOnAction(e -> {
+                    DTO_CongViec task = getItem();
+                    cvht = task.getMaCV();
+                    if (htTrangChu != null) {
+                        htTrangChu.showPomo();
+                    }
+                });
+
+                VBox pomoBox = new VBox(pomoButton);
+                pomoBox.setAlignment(Pos.CENTER);
+                HBox.setMargin(pomoBox, new Insets(0, 30, 0, 0));
+
+                taskLayout.getChildren().addAll(checkBoxContainer, taskInfo, spacer, pomoBox);
+                taskLayout.setMaxWidth(Double.MAX_VALUE);
+                setMaxWidth(Double.MAX_VALUE);
             }
 
+            //Cap nhat tung dong trong listview
             @Override
             protected void updateItem(DTO_CongViec task, boolean empty) {
                 setPrefHeight(70);
@@ -139,10 +168,23 @@ public class HTtodolist {
                 if (empty || task == null) {
                     setGraphic(null);
                 } else {
-                    checkBoxLabel.setGraphic(task.getTrangThai() ? checkedView : uncheckedView);
+                    String color = switch (task.getDoUuTien()) {
+                        case 1 -> "red";
+                        case 2 -> "orange";
+                        case 3 -> "green";
+                        default -> "default";
+                    };
+                    String state = task.getTrangThai() ? "checked" : "unchecked";
+                    checkBoxLabel.setGraphic(IconProvider.getIcon(state + "_" + color));
                     taskName.setText(task.getTenCV());
+
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                     taskDate.setText(task.getThoiGian() != null ? task.getThoiGian().format(formatter) : "");
+                    if(task.getThoiGian().isBefore(LocalDate.now())){
+                        taskDate.setFill(Color.RED);
+                    }else{
+                        taskDate.setFill(Color.BLACK);
+                    }
                     taskName.setTranslateY(7);
                     taskDate.setTranslateY(7);
                     setGraphic(taskLayout);
@@ -150,16 +192,18 @@ public class HTtodolist {
             }
         });
 
+        //Xu ly su kien khi nha vao mot dong trong listview
         listViewItems.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 DTO_CongViec selectedItem = listViewItems.getSelectionModel().getSelectedItem();
                 if (selectedItem != null) {
-                    // Kiểm tra xem click có nằm trên CheckBox không
+
                     if (event.getTarget() instanceof CheckBox) {
                         event.consume();
                         return;
                     }
                     try {
+                        mahienthi = selectedItem.getMaCV();
                         HienThiCT(selectedItem.getMaCV(), "/app/doan/CTCV.fxml");
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -192,23 +236,26 @@ public class HTtodolist {
         });
 
         //nut c
-        //setup contextMenu
         contextMenu = new ContextMenu();
-
-        MenuItem item1 = new MenuItem("do u tien cao");
-        MenuItem item2 = new MenuItem("do u tien vua");
-        MenuItem item3 = new MenuItem("do u tien thap");
-        MenuItem item4 = new MenuItem("khong");
+        MenuItem item1 = new MenuItem("Độ ưu tiên cao");
+        MenuItem item2 = new MenuItem("Độ ưu tiên trung bình");
+        MenuItem item3 = new MenuItem("Độ ưu tiên thấp");
+        MenuItem item4 = new MenuItem("Không ưu tiên");
 
         item1.setStyle("-fx-text-fill: #333333;");
         item2.setStyle("-fx-text-fill: #333333;");
         item3.setStyle("-fx-text-fill: #333333;");
         item4.setStyle("-fx-text-fill: #333333;");
 
-        item1.setOnAction(e -> dut = 1);
-        item2.setOnAction(e -> dut = 2);
-        item3.setOnAction(e -> dut = 3);
-        item4.setOnAction(e -> dut = 0);
+        String url1 = String.valueOf(getClass().getResource("/app/doan/image/FlagRed.png"));
+        String url2 = String.valueOf(getClass().getResource("/app/doan/image/FlagOrange.png"));
+        String url3 = String.valueOf(getClass().getResource("/app/doan/image/FlagGreen.png"));
+        String url0 = String.valueOf(getClass().getResource("/app/doan/image/Flag.png"));
+
+        item1.setOnAction(e -> {dut = 1; c.setStyle("-fx-background-image: url('" + url1 + "/'); -fx-background-size: 40px 40px; -fx-text-fill: transparent;");});
+        item2.setOnAction(e -> {dut = 2; c.setStyle("-fx-background-image: url('" + url2 + "'); -fx-background-size: 40px 40px; -fx-text-fill: transparent;");});
+        item3.setOnAction(e -> {dut = 3; c.setStyle("-fx-background-image: url('" + url3 + "'); -fx-background-size: 40px 40px; -fx-text-fill: transparent;");});
+        item4.setOnAction(e -> {dut = 0; c.setStyle("-fx-background-image: url('" + url0 + "'); -fx-background-size: 40px 40px; -fx-text-fill: transparent;");});
 
         contextMenu.getItems().addAll(item1, item2, item3, item4);
 
@@ -218,7 +265,6 @@ public class HTtodolist {
                     c.localToScreen(0, c.getHeight()).getY());
         });
 
-        //Xu ly HBox
         for (HBox hbox : hboxList) {
             hbox.setOnMouseClicked(this::handleHBoxClick);
         }
@@ -231,24 +277,28 @@ public class HTtodolist {
         cv.setTenCV(TFthem.getText());
         cv.setThoiGian(d);
         cv.setDoUuTien(dut);
+        cv.setPomoTT(0);
+        cv.setPomoUT(0);
         bllcv.them1(cv);
-        loadListView(1);
+        list = 1;
+        loadListView(list);
     }
 
     private void handleHBoxClick(MouseEvent event) {
         HBox clickedHBox = (HBox) event.getSource();
         if (clickedHBox == HBtoday) {
-            loadListView(1);
+            list = 1;
         } else if (clickedHBox == HBplan) {
-            loadListView(2);
+            list = 2;
         } else if (clickedHBox == HBdone) {
-            loadListView(3);
+            list = 3;
         } else if (clickedHBox == HBoverdate) {
-            loadListView(4);
+            list = 4;
         }
+        loadListView(list);
     }
 
-    private void loadListView(int i) {
+    public void loadListView(int i) {
         bllcv.tailist();
         bllcv.chialist();
         if (i == 0) {
@@ -302,11 +352,9 @@ public class HTtodolist {
                 super.updateItem(item, empty);
                 if (item == null || empty) {
                     setText("");
-                    setStyle(""); // Reset lại style khi item trống
+                    setStyle("");
                 } else {
                     setText(item.getDisplayName());
-
-                    // Kiểm tra kiểu đối tượng để đặt font size
                     if (item instanceof DTO_HocPhan) {
                         setStyle("-fx-font-size: 20px;");
                     } else if (item instanceof DTO_Chuong) {
@@ -323,24 +371,24 @@ public class HTtodolist {
             if (selectedItem instanceof DTO_HocPhan) {
                 DTO_HocPhan hp = (DTO_HocPhan) selectedItem;
                 try {
-                    HienThiCT(hp.getMaHP(), "/app/doan/CTHP.fxml");
                     mahienthi = hp.getMaHP();
+                    HienThiCT(hp.getMaHP(), "/app/doan/CTHP.fxml");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             } else if (selectedItem instanceof DTO_Chuong) {
                 DTO_Chuong c = (DTO_Chuong) selectedItem;
                 try {
-                    HienThiCT(c.getMaChuong(), "/app/doan/CTC.fxml");
                     mahienthi = c.getMaChuong();
+                    HienThiCT(c.getMaChuong(), "/app/doan/CTC.fxml");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             } else if (selectedItem instanceof DTO_BaiHoc) {
                 DTO_BaiHoc c = (DTO_BaiHoc) selectedItem;
                 try {
-                    HienThiCT(c.getMaBH(), "/app/doan/CTBH.fxml");
                     mahienthi = c.getMaBH();
+                    HienThiCT(c.getMaBH(), "/app/doan/CTBH.fxml");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -364,6 +412,7 @@ public class HTtodolist {
             primaryStage.getScene().getRoot().setEffect(blurEffect);
             popupStage.setOnHidden(event -> primaryStage.getScene().getRoot().setEffect(null));
         }
-        popupStage.show();
+        popupStage.showAndWait();
+        loadListView(list);
     }
 }

@@ -41,4 +41,17 @@ public class BLL_HocPhan {
         maxNumber  = maxNumber + 1;
         return "hp" + maxNumber;
     }
+
+    public DTO_HocPhan tim(String ma){
+        for(DTO_HocPhan hp:hpList){
+            if(hp.getMaHP().equals(ma)){
+                return hp;
+            }
+        }
+        return null;
+    }
+
+    public Boolean sua(DTO_HocPhan hp){
+        return dalhp.suaHP(hp);
+    }
 }

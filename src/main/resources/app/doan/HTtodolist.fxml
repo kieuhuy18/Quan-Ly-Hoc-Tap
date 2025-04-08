@@ -32,11 +32,11 @@
                         <Insets left="22.0" right="12.0" />
                      </HBox.margin>
                      <children>
-                        <ScrollPane prefHeight="421.0" prefWidth="270.0" style="-fx-background-color: EEEEEE;">
+                        <ScrollPane prefHeight="393.0" prefWidth="270.0" style="-fx-background-color: EEEEEE;">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="427.0" prefWidth="270.0" style="-fx-background-color: EEEEEE;">
                                  <children>
-                                    <VBox prefHeight="429.0" prefWidth="258.0" style="-fx-background-color: EEEEEE;">
+                                    <VBox prefHeight="451.0" prefWidth="258.0" style="-fx-background-color: EEEEEE;">
                                        <children>
                                           <HBox fx:id="HBtoday" prefHeight="50.0" prefWidth="200.0">
                                              <children>
@@ -123,7 +123,7 @@
                                                 <Insets left="26.0" />
                                              </VBox.margin>
                                           </Line>
-                                          <TreeView fx:id="treeView" prefHeight="224.0" prefWidth="258.0">
+                                          <TreeView fx:id="treeView" prefHeight="230.0" prefWidth="198.0">
                                              <VBox.margin>
                                                 <Insets left="22.0" right="12.0" top="3.0" />
                                              </VBox.margin></TreeView>
@@ -133,7 +133,7 @@
                               </AnchorPane>
                           </content>
                            <VBox.margin>
-                              <Insets top="35.0" />
+                              <Insets top="32.0" />
                            </VBox.margin>
                         </ScrollPane>
                      </children>

@@ -178,21 +178,4 @@ public class DAL_TaiKhoan {
             throw new RuntimeException(e);
         }
     }
-
-    public static void main(String[] args) {
-
-        DAL_TaiKhoan dtk = new DAL_TaiKhoan();
-        DTO_TaiKhoan tk = dtk.LayTK("kieuduchuy03@gmail.com");
-        dtk.QuenMatKhau(tk);
-//        boolean s = dtk.DangNhap("mail@gmail.com", "huy");
-//        if(s != false){
-//            System.out.println("dung");
-//        }if(s == false){
-//            System.out.println("sai");
-//        }
-//        tkList = dtk.getallTKlist();
-//        for(DTO_TaiKhoan tkl : tkList){
-//            System.out.println(tkl.getEmail());
-//        }
-    }
 }

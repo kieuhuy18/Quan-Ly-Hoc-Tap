@@ -35,7 +35,6 @@
 
 #listViewItems .list-cell:filled:selected {
     -fx-background-color: #CCCCCC;
-    -fx-text-fill: black;
 }
 
 /* Định dạng ContextMenu */
@@ -65,15 +64,15 @@
 .list-cell {
     -fx-padding: 5px;
     -fx-background-color: #EEEEEE;
-    -fx-padding: 5px 0px; /* Tạo khoảng cách giữa các dòng */
+    -fx-padding: 5px 0px;
     -fx-background-insets: 0 0 5px 0;
-    -fx-border-color: #D1D1D1; /* Màu viền xám nhạt */
-    -fx-border-width: 0 0 1px 0; /* Chỉ viền dưới */
-    -fx-padding: 5px; /* Khoảng cách bên trong */
+    -fx-border-color: #D1D1D1;
+    -fx-border-width: 0 0 1px 0;
+    -fx-padding: 5px;
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: #4CAF50; /* Màu nền khi được chọn */
+    -fx-background-color: #4CAF50;
 }
 
 .scroll-pane {

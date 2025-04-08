@@ -1,0 +1,13 @@
+#listViewItems .list-cell:filled:selected {
+    -fx-background-color: #CCCCCC;
+}
+
+.list-cell {
+    -fx-padding: 5px;
+    -fx-background-color: #EEEEEE;
+    -fx-padding: 5px 0px;
+    -fx-background-insets: 0 0 5px 0;
+    -fx-border-color: #D1D1D1;
+    -fx-border-width: 0 0 1px 0;
+    -fx-padding: 5px;
+}
