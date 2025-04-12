@@ -109,7 +109,7 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox prefHeight="294.0" prefWidth="939.0" style="-fx-background-color: EEEEEE; -fx-background-radius: 25;">
+            <VBox prefHeight="272.0" prefWidth="939.0" style="-fx-background-color: EEEEEE; -fx-background-radius: 25;">
                <VBox.margin>
                   <Insets left="30.0" right="30.0" top="15.0" />
                </VBox.margin>
@@ -122,7 +122,7 @@
                         <Insets left="30.0" top="15.0" />
                      </VBox.margin>
                   </Label>
-                  <TextArea fx:id="TAmota" prefHeight="223.0" prefWidth="939.0" style="-fx-background-color: EEEEEE;">
+                  <TextArea fx:id="TAmota" prefHeight="207.0" prefWidth="939.0" style="-fx-background-color: EEEEEE;">
                      <font>
                         <Font size="16.0" />
                      </font></TextArea>

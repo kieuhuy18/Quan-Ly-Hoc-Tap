@@ -14,7 +14,7 @@ import java.util.Optional;
 
 import static app.doan.GUI.HTtodolist.mahienthi;
 
-public class CTBH {
+public class ThemBH {
     @FXML
     private TextField TXTtieude;
 
@@ -48,18 +48,9 @@ public class CTBH {
 
     @FXML
     public void initialize(){
-        DTO_BaiHoc bh = bllbh.tim(mahienthi);
-        TXTtieude.setVisible(false);
-        TXTtieude.setText(bh.getTenBH());
-        displayLabel.setText(TXTtieude.getText());
-        TAmota.setText(bh.getGhiChu());
-        if(bh.getNgayHoc() == null){
-            LBdate.setText("Trống");
-        }else LBdate.setText(bh.getNgayHoc().format(formatter));
+        LBdate.setText("Trống");
+
         CBBtrangthai.getItems().addAll("Chưa hoàn thành", "Hoàn thành");
-        if(bh.getTrangThai()){
-            CBBtrangthai.setValue("Hoàn thành");
-        }else CBBtrangthai.setValue("Chưa hoàn thành");
         CBBtrangthai.setValue("Chưa hoàn thành");
 
         CBBtrangthai.setCellFactory(lv -> new ListCell<String>() {
@@ -120,32 +111,40 @@ public class CTBH {
         });
 
         IMclose.setOnMouseClicked(event -> {
-            DTO_BaiHoc b = new DTO_BaiHoc();
-            b.setMaBH(bh.getMaBH());
-            b.setTenBH(displayLabel.getText());
-            b.setGhiChu(TAmota.getText());
-            if(CBBtrangthai.getValue().equals("Chưa hoàn thành")){
-                b.setTrangThai(false);
-            }else b.setTrangThai(true);
-            if("Trống".equals(LBdate.getText())){
-                b.setNgayHoc(null);
-            }else {
-                LocalDate date = LocalDate.parse(LBdate.getText(), formatter);
-                b.setNgayHoc(date);
-            }
-            b.setMaChuong(bh.getMaChuong());
             Stage stage = (Stage) IMclose.getScene().getWindow();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Xác nhận");
-            alert.setHeaderText("Lưu thay đổi?");
-
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK){
-                bllbh.sua(b);
+            if(TXTtieude.getText().isEmpty() && TAmota.getText() != null){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Cảnh báo");
+                alert.setHeaderText("Không có tiêu đề");
+                alert.setContentText("Vui lòng nhập tiêu đề.");
+                alert.showAndWait();
+            }else if(TXTtieude.getText().isEmpty() && TAmota.getText().isEmpty()){
                 stage.close();
-            }else {
-                bllbh.sua(bh);
-                stage.close();
+            }else{
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Xác nhận");
+                alert.setHeaderText("Lưu thay đổi?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK){
+                    DTO_BaiHoc b = new DTO_BaiHoc();
+                    b.setMaBH(bllbh.tangma());
+                    b.setTenBH(displayLabel.getText());
+                    b.setGhiChu(TAmota.getText());
+                    if(CBBtrangthai.getValue().equals("Chưa hoàn thành")){
+                        b.setTrangThai(false);
+                    }else b.setTrangThai(true);
+                    if("Trống".equals(LBdate.getText())){
+                        b.setNgayHoc(null);
+                    }else {
+                        LocalDate date = LocalDate.parse(LBdate.getText(), formatter);
+                        b.setNgayHoc(date);
+                    }
+                    b.setMaChuong(mahienthi);
+                    bllbh.them1(b);
+                    stage.close();
+                }else {
+                    stage.close();
+                }
             }
         });
     }

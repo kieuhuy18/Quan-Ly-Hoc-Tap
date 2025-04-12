@@ -1,0 +1,31 @@
+.calendar-grid {
+    -fx-padding: 5px;
+}
+
+.day-cell {
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-alignment: center;
+    -fx-padding: 2px;
+}
+
+.day-text {
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+#prevMonthButton{
+    -fx-background-image: url("../image/Arrowleft.png");
+    -fx-background-color: #DDDDDD;
+    -fx-background-size: 25px 25px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+#nextMonthButton{
+    -fx-background-image: url("../image/Arrowright.png");
+    -fx-background-color: #DDDDDD;
+    -fx-background-size: 25px 25px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}

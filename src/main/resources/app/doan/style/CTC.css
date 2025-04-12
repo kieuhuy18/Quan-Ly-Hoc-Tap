@@ -7,7 +7,7 @@
 }
 
 .text-area .content {
-    -fx-background-color: #EEEEEE;
+    -fx-background-color: #EEEEEE; /* Đổi màu nền nhập liệu */
 }
 
 .comboBox.setStyle("-fx-font-size: 18px;");

@@ -68,7 +68,7 @@
                            <HBox.margin>
                               <Insets right="152.0" />
                            </HBox.margin></Button>
-                        <Button fx:id="BTtaikhoan" mnemonicParsing="false" />
+                        <Button fx:id="BTtaikhoan" mnemonicParsing="false" onAction="#showTK" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="35.0" top="40.0" />

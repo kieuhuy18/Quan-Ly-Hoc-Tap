@@ -12,7 +12,7 @@ import java.util.Optional;
 
 import static app.doan.GUI.HTtodolist.mahienthi;
 
-public class CTC {
+public class ThemC {
     @FXML
     private TextField TXTtieude;
 
@@ -32,15 +32,8 @@ public class CTC {
 
     @FXML
     public void initialize(){
-        DTO_Chuong c = bllc.tim(mahienthi);
         TXTtieude.setVisible(false);
-        TXTtieude.setText(c.getTenChuong());
-        displayLabel.setText(TXTtieude.getText());
-        TAmota.setText(c.getMoTa());
         CBBtrangthai.getItems().addAll("Chưa hoàn thành", "Hoàn thành");
-        if(c.getTrangThai()){
-            CBBtrangthai.setValue("Hoàn thành");
-        }else CBBtrangthai.setValue("Chưa hoàn thành");
         CBBtrangthai.setValue("Chưa hoàn thành");
 
         CBBtrangthai.setCellFactory(lv -> new ListCell<String>() {
@@ -80,26 +73,37 @@ public class CTC {
         });
 
         IMclose.setOnMouseClicked(event -> {
-            DTO_Chuong chuong = new DTO_Chuong();
-            chuong.setMaChuong(c.getMaChuong());
-            chuong.setTenChuong(displayLabel.getText());
-            chuong.setMoTa(TAmota.getText());
-            chuong.setMaHP(c.getMaHP());
-            if(CBBtrangthai.getValue().equals("Chưa hoàn thành")){
-                chuong.setTrangThai(false);
-            }else chuong.setTrangThai(true);
             Stage stage = (Stage) IMclose.getScene().getWindow();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Xác nhận");
-            alert.setHeaderText("Lưu thay đổi?");
+            if(TXTtieude.getText().isEmpty() && TAmota.getText() != null){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Cảnh báo");
+                alert.setHeaderText("Không có tiêu đề");
+                alert.setContentText("Vui lòng nhập tiêu đề.");
+                alert.showAndWait();
+            }else if(TXTtieude.getText().isEmpty() && TAmota.getText().isEmpty()){
+                stage.close();
+            } else{
+                DTO_Chuong ch = new DTO_Chuong();
+                ch.setMaChuong(bllc.tangma());
+                ch.setTenChuong(TXTtieude.getText());
+                if(CBBtrangthai.getValue().equals("Chưa hoàn thành") || CBBtrangthai.getValue().isEmpty()){
+                    ch.setTrangThai(false);
+                }else{
+                    ch.setTrangThai(true);
+                }
+                ch.setMoTa(TAmota.getText());
+                ch.setMaHP(mahienthi);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Xác nhận");
+                alert.setHeaderText("Lưu?");
 
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK){
-                bllc.sua(chuong);
-                stage.close();
-            }else {
-                bllc.sua(c);
-                stage.close();
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK){
+                    bllc.them1(ch);
+                    stage.close();
+                }else{
+                    stage.close();
+                }
             }
         });
     }

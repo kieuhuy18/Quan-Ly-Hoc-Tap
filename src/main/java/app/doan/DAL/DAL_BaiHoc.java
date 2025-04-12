@@ -3,7 +3,7 @@ package app.doan.DAL;
 import app.doan.DTO.DTO_BaiHoc;
 
 import java.sql.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -14,9 +14,9 @@ public class DAL_BaiHoc {
     public Statement stm = null;
     public static PreparedStatement p = null;
     public static ArrayList<DTO_BaiHoc> bhList = new ArrayList<DTO_BaiHoc>();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-    public ArrayList<DTO_BaiHoc> getallBHlist(){
+    public void getallBHlist(){
         try{
             bhList.clear();
             String sql = "SELECT * FROM BaiHoc";
@@ -29,10 +29,10 @@ public class DAL_BaiHoc {
                 c.setMaBH(rs.getString("MaBaiHoc"));
                 c.setTenBH(rs.getString("TenBaiHoc"));
                 c.setGhiChu(rs.getString("GhiChu"));
-                if("trong".equals(rs.getString("NgayHoc"))){
+                if("Trống".equals(rs.getString("NgayHoc"))){
                     c.setNgayHoc(null);
                 }else {
-                    LocalDateTime dateTime = LocalDateTime.parse(rs.getString("NgayHoc"), formatter);
+                    LocalDate dateTime = LocalDate.parse(rs.getString("NgayHoc"), formatter);
                     c.setNgayHoc(dateTime);
                 }
                 c.setTrangThai(rs.getBoolean("TrangThai"));
@@ -44,7 +44,6 @@ public class DAL_BaiHoc {
         }finally{
             close();
         }
-        return bhList;
     }
 
     public boolean hasBH(String hocphan){
@@ -65,7 +64,7 @@ public class DAL_BaiHoc {
         return result;
     }
 
-    public boolean themC(DTO_BaiHoc c){
+    public boolean themBH(DTO_BaiHoc c){
         boolean result = false;
         try{
             String sql = "INSERT INTO BaiHoc VALUES(?, ?, ?, ?, ?, ?)";
@@ -76,11 +75,10 @@ public class DAL_BaiHoc {
             p.setString(3, c.getGhiChu());
             if (c.getNgayHoc() != null) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                p.setString(3, c.getNgayHoc().format(formatter));
+                p.setString(4, c.getNgayHoc().format(formatter));
             } else {
-                p.setString(3, "trong");
+                p.setString(4, "Trống");
             }
-            p.setString(4, c.getNgayHoc().format(formatter));
             p.setBoolean(5, c.getTrangThai());
             p.setString(6, c.getMaChuong());
             if(p.executeUpdate() >= 1){
@@ -94,7 +92,7 @@ public class DAL_BaiHoc {
         return result;
     }
 
-    public boolean suaC(DTO_BaiHoc c){
+    public boolean suaBH(DTO_BaiHoc c){
         boolean result = false;
         try{
             String SQL = "UPDATE BaiHoc SET MaBaiHoc = ?, TenBaiHoc = ?, GhiChu = ?, NgayHoc = ?, TrangThai = ?, MaChuong = ? WHERE MaBaiHoc = ? ";
@@ -103,7 +101,9 @@ public class DAL_BaiHoc {
             p.setString(1, c.getMaBH());
             p.setString(2, c.getTenBH());
             p.setString(3, c.getGhiChu());
-            p.setString(4, c.getNgayHoc().format(formatter));
+            if(c.getNgayHoc() == null){
+                p.setString(4, "Trống");
+            }else p.setString(4, c.getNgayHoc().format(formatter));
             p.setBoolean(5, c.getTrangThai());
             p.setString(6, c.getMaChuong());
             p.setString(7, c.getMaBH());
@@ -119,7 +119,7 @@ public class DAL_BaiHoc {
         return result;
     }
 
-    public DTO_BaiHoc timtheomac(String ma){
+    public DTO_BaiHoc timtheomabh(String ma){
         try{
             String sql = "SELECT * FROM BaiHoc WHERE MaBaiHoc=?";
             conn = app.doan.DAL.DatabaseConnection.connect();
@@ -129,7 +129,7 @@ public class DAL_BaiHoc {
             if(rs.next()){
                 String ten = rs.getString("TenBaiHoc");
                 String mota = rs.getString("GhiChu");
-                LocalDateTime dt = LocalDateTime.parse(rs.getString("NgayHoc"), formatter);
+                LocalDate dt = LocalDate.parse(rs.getString("NgayHoc"), formatter);
                 boolean trangthai = rs.getBoolean("TrangThai");
                 String mahp = rs.getString("MaChuong");
                 DTO_BaiHoc c = new DTO_BaiHoc(ma, ten, mota, dt, trangthai, mahp);
@@ -155,7 +155,7 @@ public class DAL_BaiHoc {
                 String ma = rs.getString("MaBaiHoc");
                 String ten = rs.getString("TenBaiHoc");
                 String mota = rs.getString("GhiChu");
-                LocalDateTime dt = LocalDateTime.parse(rs.getString("NgayHoc"), formatter);
+                LocalDate dt = LocalDate.parse(rs.getString("NgayHoc"), formatter);
                 boolean trangthai = rs.getBoolean("TrangThai");
                 String mahp = rs.getString("MaChuong");
                 DTO_BaiHoc kh = new DTO_BaiHoc(ma, ten, mota, dt, trangthai, mahp);
@@ -169,7 +169,7 @@ public class DAL_BaiHoc {
         return bhList;
     }
 
-    public boolean xoaC(DTO_BaiHoc kh){
+    public boolean xoaBH(DTO_BaiHoc kh){
         boolean result = false;
         try{
             String sql = "DELETE FROM BaiHoc WHERE MaBaiHoc = ?";

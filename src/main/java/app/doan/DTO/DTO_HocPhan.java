@@ -11,6 +11,14 @@ public class DTO_HocPhan implements HienThi {
 
     public DTO_HocPhan(){}
 
+    public DTO_HocPhan(String maHP, String tenHP, String giangVien, Boolean LapLai, String moTa, String maTK){
+        this.maHP = maHP;
+        this.tenHP = tenHP;
+        this.giangVien = giangVien;
+        this.moTa = moTa;
+        this.maTK = maTK;
+    }
+
     public DTO_HocPhan(String maHP, String tenHP, String giangVien, Boolean LapLai, String moTa, Boolean lapLai, String maTK){
         this.maHP = maHP;
         this.tenHP = tenHP;

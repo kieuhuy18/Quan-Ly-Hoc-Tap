@@ -1,7 +1,7 @@
 package app.doan.GUI;
 
-import app.doan.BLL.BLL_Chuong;
-import app.doan.DTO.DTO_Chuong;
+import app.doan.BLL.BLL_HocPhan;
+import app.doan.DTO.DTO_HocPhan;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -10,14 +10,22 @@ import javafx.stage.Stage;
 
 import java.util.Optional;
 
+import static app.doan.GUI.HTDangNhap.MaND;
 import static app.doan.GUI.HTtodolist.mahienthi;
 
-public class CTC {
+public class ThemHP {
+
     @FXML
     private TextField TXTtieude;
 
     @FXML
+    private TextField TXTgv;
+
+    @FXML
     private Label displayLabel;
+
+    @FXML
+    private Label displayLabel1;
 
     @FXML
     private ImageView IMclose;
@@ -28,20 +36,11 @@ public class CTC {
     @FXML
     private TextArea TAmota;
 
-    BLL_Chuong bllc = new BLL_Chuong();
+    BLL_HocPhan bllhp = new BLL_HocPhan();
 
     @FXML
     public void initialize(){
-        DTO_Chuong c = bllc.tim(mahienthi);
-        TXTtieude.setVisible(false);
-        TXTtieude.setText(c.getTenChuong());
-        displayLabel.setText(TXTtieude.getText());
-        TAmota.setText(c.getMoTa());
         CBBtrangthai.getItems().addAll("Chưa hoàn thành", "Hoàn thành");
-        if(c.getTrangThai()){
-            CBBtrangthai.setValue("Hoàn thành");
-        }else CBBtrangthai.setValue("Chưa hoàn thành");
-        CBBtrangthai.setValue("Chưa hoàn thành");
 
         CBBtrangthai.setCellFactory(lv -> new ListCell<String>() {
             @Override
@@ -74,31 +73,61 @@ public class CTC {
                 enableEditing(TXTtieude, displayLabel);
             }
         });
+        displayLabel1.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getClickCount() == 2) {
+                enableEditing(TXTgv, displayLabel1);
+            }
+        });
+
         TXTtieude.setOnAction(event -> saveText(TXTtieude, displayLabel));
         TXTtieude.focusedProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal) saveText(TXTtieude, displayLabel);
         });
+        TXTgv.setOnAction(event -> saveText(TXTgv, displayLabel1));
+        TXTgv.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal) saveText(TXTgv, displayLabel1);
+        });
 
         IMclose.setOnMouseClicked(event -> {
-            DTO_Chuong chuong = new DTO_Chuong();
-            chuong.setMaChuong(c.getMaChuong());
-            chuong.setTenChuong(displayLabel.getText());
-            chuong.setMoTa(TAmota.getText());
-            chuong.setMaHP(c.getMaHP());
-            if(CBBtrangthai.getValue().equals("Chưa hoàn thành")){
-                chuong.setTrangThai(false);
-            }else chuong.setTrangThai(true);
             Stage stage = (Stage) IMclose.getScene().getWindow();
+            if(TXTtieude.getText().isEmpty() && TXTgv.getText().isEmpty()){
+                stage.close();
+                return;
+            }else if(TXTtieude.getText().isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Cảnh báo");
+                alert.setHeaderText("Tên của học phần trống!");
+                alert.setContentText("Vui lòng nhập tên của học phần trước khi lưu.");
+                alert.showAndWait();
+                return;
+            }else if(TXTgv.getText().isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Cảnh báo");
+                alert.setHeaderText("Tên của giảng viên trống!");
+                alert.setContentText("Vui lòng nhập tên của giảng viên trước khi lưu.");
+                alert.showAndWait();
+                return;
+            }
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Xác nhận");
             alert.setHeaderText("Lưu thay đổi?");
-
             Optional<ButtonType> result = alert.showAndWait();
+
             if (result.isPresent() && result.get() == ButtonType.OK){
-                bllc.sua(chuong);
+                DTO_HocPhan h = new DTO_HocPhan();
+                h.setMaHP(bllhp.tangma());
+                h.setTenHP(TXTtieude.getText());
+                h.setGiangVien(TXTgv.getText());
+                if(CBBtrangthai.getValue().equals("Chưa hoàn thành") || CBBtrangthai.getValue().isEmpty()){
+                    h.setTrangThai(false);
+                }else{
+                    h.setTrangThai(true);
+                }
+                h.setMoTa(TAmota.getText());
+                h.setMaTK(MaND);
+                bllhp.them1(h);
                 stage.close();
             }else {
-                bllc.sua(c);
                 stage.close();
             }
         });
@@ -113,7 +142,7 @@ public class CTC {
     }
 
     private void saveText(TextField t, Label l) {
-        l.setText(t.getText().trim().isEmpty() ? "Nhấn đúp để chỉnh sửa" : t.getText());
+        l.setText(t.getText().trim().isEmpty() ? "Nhấn để chỉnh sửa" : t.getText());
         t.setVisible(false);
         l.setVisible(true);
     }

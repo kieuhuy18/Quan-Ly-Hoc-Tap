@@ -15,9 +15,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="540.0" prefWidth="1000.0" style="-fx-background-color: D9D9D9; -fx-border-color: black;" stylesheets="@style/CTBH.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.doan.GUI.CTBH">
+
+<AnchorPane prefHeight="540.0" prefWidth="1000.0" style="-fx-border-color: black;" stylesheets="@style/CTBH.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.doan.GUI.ThemBH">
    <children>
-      <VBox layoutX="4.0" layoutY="5.0" prefHeight="565.0" prefWidth="1015.0" style="-fx-background-color: D9D9D9;" stylesheets="@style/CTC.css">
+      <VBox layoutX="1.0" layoutY="1.0" prefHeight="565.0" prefWidth="1015.0" style="-fx-background-color: D9D9D9;" stylesheets="@style/CTC.css">
          <children>
             <ImageView fx:id="IMclose" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>

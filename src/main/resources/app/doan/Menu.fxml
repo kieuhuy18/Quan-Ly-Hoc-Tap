@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="1440.0" style="-fx-background-color: D9D9D9;" stylesheets="@style/Menu.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.doan.GUI.Menu">
+   <children>
+      <VBox layoutX="-2.0" prefHeight="500.0" prefWidth="1440.0">
+         <children>
+            <HBox prefHeight="421.0" prefWidth="1440.0">
+               <children>
+                  <ImageView fitHeight="215.0" fitWidth="502.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@image/secret-study-tips-768x432.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="150.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <VBox prefHeight="242.0" prefWidth="791.0">
+                     <children>
+                        <HBox maxHeight="72.0" minHeight="72.0" prefHeight="142.0" prefWidth="286.0" style="-fx-background-color: EEEEEE; -fx-background-radius: 35;">
+                           <children>
+                              <Label fx:id="CVCHT" prefHeight="18.0" prefWidth="23.0" text="0">
+                                 <HBox.margin>
+                                    <Insets left="40.0" top="22.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Công việc chưa hoàn thành">
+                                 <HBox.margin>
+                                    <Insets top="22.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="25.0" left="250.0" right="250.0" top="25.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox maxHeight="72.0" minHeight="72.0" prefHeight="146.0" prefWidth="510.0" style="-fx-background-color: EEEEEE; -fx-background-radius: 35;">
+                           <VBox.margin>
+                              <Insets bottom="65.0" left="250.0" right="250.0" />
+                           </VBox.margin>
+                           <children>
+                              <Label fx:id="CVHT" prefHeight="18.0" prefWidth="23.0" text="0">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="50.0" top="22.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label text="Công việc đã hoàn thành">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets top="22.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="406.0" prefWidth="1440.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <children>
+                  <BarChart fx:id="barChart" style="-fx-background-radius: 35;" title="Tiến độ công việc hôm nay">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" fx:id="xAxis" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis fx:id="yAxis" side="LEFT" />
+                    </yAxis>
+                     <HBox.margin>
+                        <Insets bottom="25.0" left="140.0" />
+                     </HBox.margin>
+                  </BarChart>
+                  <LineChart fx:id="lineChartPomodoroWeek" prefHeight="258.0" prefWidth="563.0" style="-fx-background-radius: 35;" title="Biểu đồ số pomodoro thực hiện trong tuần">
+                    <xAxis>
+                      <CategoryAxis fx:id="lineChartXAxis" label="Ngày" side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis fx:id="lineChartYAxis" label="Số phiên Pomodoro" side="LEFT" />
+                    </yAxis>
+                     <HBox.margin>
+                        <Insets bottom="25.0" left="80.0" right="150.0" />
+                     </HBox.margin>
+                  </LineChart>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

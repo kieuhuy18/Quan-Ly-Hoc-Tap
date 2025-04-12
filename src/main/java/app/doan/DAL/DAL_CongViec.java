@@ -10,13 +10,15 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import static app.doan.DAL.DatabaseConnection.close;
+import static app.doan.GUI.HTDangNhap.MaND;
 
 public class DAL_CongViec {
     public static Connection conn;
     public Statement stm = null;
     public static PreparedStatement p = null;
     public static ArrayList<DTO_CongViec> cvList = new ArrayList<DTO_CongViec>();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    public static ArrayList<String> cvndList = new ArrayList<String>();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     public DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HH:mm");
 
     public ArrayList<DTO_CongViec> getallCVlist(){
@@ -58,6 +60,26 @@ public class DAL_CongViec {
             close();
         }
         return cvList;
+    }
+
+    public ArrayList<String> getallNDCVlist(){
+        try{
+            cvndList.clear();
+            String sql = "SELECT * FROM NguoiDung_CongViec WHERE MaND = ?";
+            Connection conn = app.doan.DAL.DatabaseConnection.connect();
+            p = conn.prepareStatement(sql);
+            p.setString(1, MaND);
+            ResultSet rs = p.executeQuery();
+            while(rs.next()){
+                String macv = rs.getString("MaCV");
+                cvndList.add(macv);
+            }
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }finally{
+            close();
+        }
+        return cvndList;
     }
 
     public boolean hasCV(String congviec){
@@ -102,6 +124,26 @@ public class DAL_CongViec {
                 p.setNull(9, Types.VARCHAR);
             }
             p.setString(10, cv.getMaBH());
+            if(p.executeUpdate() >= 1){
+                result = themCVND(cv.getMaCV());
+            }
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }finally{
+            close();
+        }
+        return result;
+    }
+
+    public boolean themCVND(String a){
+        boolean result = false;
+        try{
+            String sql = "INSERT INTO NguoiDung_CongViec VALUES(?, ?)";
+            conn = app.doan.DAL.DatabaseConnection.connect();
+            p = conn.prepareStatement(sql);
+            p.setString(1, MaND);
+            p.setString(2, a);
+
             if(p.executeUpdate() >= 1){
                 result = true;
             }

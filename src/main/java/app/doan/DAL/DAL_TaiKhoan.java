@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import static app.doan.DAL.DatabaseConnection.close;
+import static app.doan.GUI.HTDangNhap.MaND;
 
 public class DAL_TaiKhoan {
     public static Connection conn;
@@ -59,26 +60,6 @@ public class DAL_TaiKhoan {
         return result;
     }
 
-    public boolean DangNhap(String TaiKhoan,String MatKhau){
-        boolean result = false;
-            try{
-                conn = app.doan.DAL.DatabaseConnection.connect();
-                if (conn == null) {
-                    System.out.println("Lỗi: Không thể kết nối đến CSDL!");
-                    return false;
-                }
-                stm = conn.createStatement();
-                ResultSet rs = stm.executeQuery("Select * from TaiKhoan where Email = '"+TaiKhoan+"'and MatKhau = '"+MatKhau+"'");
-                if(rs.next())
-                    result = true;
-            }catch(SQLException ex){
-                System.out.println(ex);
-            }finally{
-                close();
-            }
-        return result;
-    }
-
     public boolean DangKy(DTO_TaiKhoan tk){
         boolean result = false;
             try{
@@ -118,6 +99,28 @@ public class DAL_TaiKhoan {
             }finally{
                 close();
             }
+        return result;
+    }
+
+    public boolean sua(DTO_TaiKhoan tk){
+        boolean result = false;
+        try{
+            String SQL = "UPDATE TaiKhoan SET Email = ?, Ten = ?, MatKhau = ? WHERE Email = ? ";
+            conn = app.doan.DAL.DatabaseConnection.connect();
+            p = conn.prepareStatement(SQL);
+            p.setString(1, MaND);
+            p.setString(2, tk.getTenND());
+            p.setString(3, tk.getMatKhau());
+            p.setString(4, tk.getEmail());
+            p.executeUpdate();
+            if(p.executeUpdate() >= 1){
+                result = true;
+            }
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }finally{
+            close();
+        }
         return result;
     }
 

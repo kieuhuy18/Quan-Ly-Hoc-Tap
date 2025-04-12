@@ -6,18 +6,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
-import static app.doan.GUI.HTDangNhap.MaND;
 import static app.doan.GUI.HTtodolist.mahienthi;
 
 public class CTHP {
-    @FXML
-    private StackPane container;
-
     @FXML
     private TextField TXTtieude;
 
@@ -39,7 +34,6 @@ public class CTHP {
     @FXML
     private TextArea TAmota;
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     BLL_HocPhan bllhp = new BLL_HocPhan();
 
     @FXML
@@ -105,14 +99,41 @@ public class CTHP {
 
         IMclose.setOnMouseClicked(event -> {
             Stage stage = (Stage) IMclose.getScene().getWindow();
+            if(TXTtieude.getText().isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Cảnh báo");
+                alert.setHeaderText("Không có tiêu đề");
+                alert.setContentText("Vui lòng nhập tiêu đề.");
+                alert.showAndWait();
+            }else if(TXTgv.getText().isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Cảnh báo");
+                alert.setHeaderText("Tên của giảng viên trống!");
+                alert.setContentText("Vui lòng nhập tên của giảng viên trước khi lưu.");
+                alert.showAndWait();
+                return;
+            }
             DTO_HocPhan h = new DTO_HocPhan();
             h.setMaHP(hp.getMaHP());
             h.setTenHP(TXTtieude.getText());
             h.setGiangVien(TXTgv.getText());
-            h.setTrangThai(!CBBtrangthai.getValue().equals("Chưa hoàn thành"));
+            if(CBBtrangthai.getValue().equals("Chưa hoàn thành")){
+                h.setTrangThai(false);
+            }else{
+                h.setTrangThai(true);
+            }
             h.setMoTa(TAmota.getText());
-            h.setMaTK(MaND);
-            if(bllhp.sua(h)){
+            h.setMaTK(hp.getMaTK());
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Xác nhận");
+            alert.setHeaderText("Lưu thay đổi?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK){
+                bllhp.sua(h);
+                stage.close();
+            }else {
+                bllhp.sua(hp);
                 stage.close();
             }
         });

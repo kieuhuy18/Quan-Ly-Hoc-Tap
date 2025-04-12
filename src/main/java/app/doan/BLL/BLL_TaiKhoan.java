@@ -40,4 +40,22 @@ public class BLL_TaiKhoan {
         daltk.DangKy(t);
         return true;
     }
+
+    public DTO_TaiKhoan tim(String ma){
+        tailist();
+        for(DTO_TaiKhoan tk : tkList){
+            if(tk.getEmail().equals(ma)){
+                return tk;
+            }
+        }
+        return null;
+    }
+
+    public boolean sua(DTO_TaiKhoan tk){
+        return daltk.suaTK(tk);
+    }
+
+    public boolean sua1(DTO_TaiKhoan tk){
+        return daltk.sua(tk);
+    }
 }

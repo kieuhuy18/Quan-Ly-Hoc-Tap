@@ -63,13 +63,13 @@ public class HTTrangChu {
     }
 
     public void showTrangChu() {
-        loadView("/app/doan/HTTrangChu.fxml");
+        loadView("/app/doan/Menu.fxml");
     }
 
     @FXML
     public void initialize(){
+        showTrangChu();
         BTtrangchu.setOnAction(actionEvent -> {
-            System.out.println(isRunning);
             if(isRunning){
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Xác nhận");

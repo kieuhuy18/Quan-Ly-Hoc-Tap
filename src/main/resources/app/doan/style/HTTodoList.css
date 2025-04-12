@@ -1,7 +1,7 @@
 #a{
     -fx-background-image: url("../image/Plus.png");
     -fx-background-color: #EEEEEE;
-        -fx-background-size: 40px 40px;
+    -fx-background-size: 40px 40px;
 }
 
 #b{
@@ -37,7 +37,6 @@
     -fx-background-color: #CCCCCC;
 }
 
-/* Định dạng ContextMenu */
 .context-menu {
     -fx-background-color: #eeeeee;
     -fx-background-radius: 10px;
@@ -46,7 +45,6 @@
     -fx-padding: 5px;
 }
 
-/* Định dạng từng MenuItem */
 .menu-item {
     -fx-background-color: transparent;
     -fx-text-fill: #333333;

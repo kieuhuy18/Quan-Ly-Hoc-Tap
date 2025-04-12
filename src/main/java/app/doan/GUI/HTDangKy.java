@@ -1,11 +1,8 @@
 package app.doan.GUI;
 
 import app.doan.BLL.BLL_TaiKhoan;
-import app.doan.Main;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -27,12 +24,6 @@ public class HTDangKy {
 
     @FXML
     private TextField TFtennd;
-
-    @FXML
-    private Button BTdangky;
-
-    @FXML
-    private Label LBdangnhap;
 
     BLL_TaiKhoan blltk = new BLL_TaiKhoan();
     private static final String EMAIL_REGEX =  "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";

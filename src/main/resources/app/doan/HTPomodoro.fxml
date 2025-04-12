@@ -78,9 +78,17 @@
                         <Insets bottom="25.0" right="58.0" top="28.0" />
                      </VBox.margin>
                      <children>
-                        <ListView fx:id="listViewItems" prefHeight="301.0" prefWidth="472.0" style="-fx-background-radius: 20; -fx-background-color: EEEEEE;">
+                        <Label text="Công việc hôm nay">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
                            <VBox.margin>
-                              <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
+                              <Insets left="170.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <ListView fx:id="listViewItems" prefHeight="253.0" prefWidth="462.0" style="-fx-background-radius: 20; -fx-background-color: EEEEEE;">
+                           <VBox.margin>
+                              <Insets bottom="15.0" left="5.0" right="5.0" top="10.0" />
                            </VBox.margin></ListView>
                      </children>
                   </VBox>

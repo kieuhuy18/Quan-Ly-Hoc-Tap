@@ -1,0 +1,45 @@
+#TXTtieude{
+    -fx-font-size: 15px;
+}
+
+#displayLabe{
+    -fx-font-size: 15px;
+}
+
+.text-area .content {
+    -fx-background-color: #EEEEEE;
+}
+
+#BTdate{
+    -fx-background-image: url("../image/Calendar.png");
+    -fx-background-color: #EEEEEE;
+    -fx-background-size: 40px 40px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+#BTcancel{
+    -fx-background-image: url("../image/cancel.png");
+    -fx-background-color: #EEEEEE;
+    -fx-background-size: 40px 40px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+#datePicker {
+    -fx-opacity: 0;
+    -fx-max-width: 0;
+    -fx-max-height: 0;
+    -fx-min-width: 0;
+    -fx-min-height: 0;
+    -fx-padding: 0;
+    -fx-margin: 0;
+}
+
+#datePicker .text-field {
+    -fx-opacity: 0;
+    -fx-max-width: 0;
+    -fx-padding: 0;
+}
+
+.comboBox.setStyle("-fx-font-size: 18px;");

@@ -21,18 +21,20 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.scene.input.MouseButton;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 
 import static app.doan.BLL.BLL_CongViec.*;
-import static app.doan.DAL.DAL_BaiHoc.bhList;
 import static app.doan.DAL.DAL_CongViec.cvList;
 import static app.doan.DAL.DAL_HocPhan.hpList;
 import static app.doan.Main.primaryStage;
@@ -48,8 +50,6 @@ public class HTtodolist {
     private int dut = 0;
     private static int list = 1;
     public static String cvht;
-
-    private ContextMenu contextMenu;
 
     @FXML
     public TextField TFthem;
@@ -86,6 +86,9 @@ public class HTtodolist {
 
     @FXML
     private TreeView<HienThi> treeView;
+
+    @FXML
+    private Button BTthemHP;
 
     private HTTrangChu htTrangChu;
 
@@ -204,7 +207,7 @@ public class HTtodolist {
                     }
                     try {
                         mahienthi = selectedItem.getMaCV();
-                        HienThiCT(selectedItem.getMaCV(), "/app/doan/CTCV.fxml");
+                        HienThiCT("/app/doan/CTCV.fxml");
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -236,28 +239,26 @@ public class HTtodolist {
         });
 
         //nut c
-        contextMenu = new ContextMenu();
-        MenuItem item1 = new MenuItem("Độ ưu tiên cao");
-        MenuItem item2 = new MenuItem("Độ ưu tiên trung bình");
-        MenuItem item3 = new MenuItem("Độ ưu tiên thấp");
-        MenuItem item4 = new MenuItem("Không ưu tiên");
+        List<String> a = Arrays.asList("Độ ưu tiên cao", "Độ ưu tiên trung bình", "Độ ưu tiên thấp", "Không ưu tiên");
+        ContextMenu contextMenu = setContextMenu(a);
 
-        item1.setStyle("-fx-text-fill: #333333;");
-        item2.setStyle("-fx-text-fill: #333333;");
-        item3.setStyle("-fx-text-fill: #333333;");
-        item4.setStyle("-fx-text-fill: #333333;");
+        String[] urls = {
+                String.valueOf(getClass().getResource("/app/doan/image/FlagRed.png")),
+                String.valueOf(getClass().getResource("/app/doan/image/FlagOrange.png")),
+                String.valueOf(getClass().getResource("/app/doan/image/FlagGreen.png")),
+                String.valueOf(getClass().getResource("/app/doan/image/Flag.png"))
+        };
 
-        String url1 = String.valueOf(getClass().getResource("/app/doan/image/FlagRed.png"));
-        String url2 = String.valueOf(getClass().getResource("/app/doan/image/FlagOrange.png"));
-        String url3 = String.valueOf(getClass().getResource("/app/doan/image/FlagGreen.png"));
-        String url0 = String.valueOf(getClass().getResource("/app/doan/image/Flag.png"));
+        List<MenuItem> items = contextMenu.getItems();
 
-        item1.setOnAction(e -> {dut = 1; c.setStyle("-fx-background-image: url('" + url1 + "/'); -fx-background-size: 40px 40px; -fx-text-fill: transparent;");});
-        item2.setOnAction(e -> {dut = 2; c.setStyle("-fx-background-image: url('" + url2 + "'); -fx-background-size: 40px 40px; -fx-text-fill: transparent;");});
-        item3.setOnAction(e -> {dut = 3; c.setStyle("-fx-background-image: url('" + url3 + "'); -fx-background-size: 40px 40px; -fx-text-fill: transparent;");});
-        item4.setOnAction(e -> {dut = 0; c.setStyle("-fx-background-image: url('" + url0 + "'); -fx-background-size: 40px 40px; -fx-text-fill: transparent;");});
-
-        contextMenu.getItems().addAll(item1, item2, item3, item4);
+        for (int i = 0; i < items.size(); i++) {
+            final int index = i;
+            MenuItem item = items.get(i);
+            item.setOnAction(e -> {
+                dut = index + 1;
+                c.setStyle("-fx-background-image: url('" + urls[index] + "'); -fx-background-size: 40px 40px; -fx-text-fill: transparent;");
+            });
+        }
 
         //Xu ly su kien
         c.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -268,6 +269,25 @@ public class HTtodolist {
         for (HBox hbox : hboxList) {
             hbox.setOnMouseClicked(this::handleHBoxClick);
         }
+
+        BTthemHP.setOnAction(event -> {
+            try {
+                HienThiCT("/app/doan/ThemHP.fxml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    public ContextMenu setContextMenu(List<String> menu){
+        ContextMenu Menu = new ContextMenu();
+        int i = 0;
+        for(String s: menu){
+            MenuItem a = new MenuItem(s);
+            a.setStyle("-fx-text-fill: #333333;");
+            Menu.getItems().add(a);
+        }
+        return Menu;
     }
 
     @FXML
@@ -282,6 +302,7 @@ public class HTtodolist {
         bllcv.them1(cv);
         list = 1;
         loadListView(list);
+        TFthem.setText(null);
     }
 
     private void handleHBoxClick(MouseEvent event) {
@@ -315,88 +336,162 @@ public class HTtodolist {
     }
 
     private void setupTreeView(List<DTO_HocPhan> hocPhanList) {
-        TreeItem<HienThi> rootItem = new TreeItem<>(new HienThi() {
-            @Override
-            public String getDisplayName() {
-                return "Danh sach hoc phan";
-            }
-        });
-        rootItem.setExpanded(true);
+        TreeItem<HienThi> root = new TreeItem<>();
 
         for (DTO_HocPhan hocPhan : hocPhanList) {
             TreeItem<HienThi> hocPhanNode = new TreeItem<>(hocPhan);
             hocPhanNode.setExpanded(false);
+            root.getChildren().add(hocPhanNode);
 
             for (DTO_Chuong chuong : bllc.timtheohocphan(hocPhan.getMaHP())) {
                 TreeItem<HienThi> chuongNode = new TreeItem<>(chuong);
                 chuongNode.setExpanded(false);
+                hocPhanNode.getChildren().add(chuongNode);
 
                 for (DTO_BaiHoc baiHoc : bllbh.timtheochuong(chuong.getMaChuong())) {
                     TreeItem<HienThi> baiHocNode = new TreeItem<>(baiHoc);
                     chuongNode.getChildren().add(baiHocNode);
                 }
-
-                hocPhanNode.getChildren().add(chuongNode);
             }
-
-            rootItem.getChildren().add(hocPhanNode);
         }
 
-        treeView.setRoot(rootItem);
-        treeView.setShowRoot(true);
+        treeView.setRoot(root);
+        treeView.setShowRoot(false);
 
-        // Tùy chỉnh hiển thị
-        treeView.setCellFactory(tv -> new javafx.scene.control.TreeCell<>() {
-            @Override
-            protected void updateItem(HienThi item, boolean empty) {
-                super.updateItem(item, empty);
-                if (item == null || empty) {
-                    setText("");
-                    setStyle("");
-                } else {
-                    setText(item.getDisplayName());
-                    if (item instanceof DTO_HocPhan) {
-                        setStyle("-fx-font-size: 20px;");
-                    } else if (item instanceof DTO_Chuong) {
-                        setStyle("-fx-font-size: 18px;");
-                    } else if (item instanceof DTO_BaiHoc) {
-                        setStyle("-fx-font-size: 16px;");
+        treeView.setCellFactory(tv -> {
+            TreeCell<HienThi> cell = new TreeCell<HienThi>() {
+                @Override
+                protected void updateItem(HienThi item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                        setGraphic(null);
+                        setContextMenu(null);
+                        setOnMouseClicked(null); // Loại bỏ listener click chuột trái cũ
+                    } else {
+                        setText(item.getDisplayName());
+                        setGraphic(null);
+
+                        TreeItem<HienThi> currentTreeItem = getTreeItem();
+                        if (currentTreeItem != null) {
+                            ContextMenu contextMenu = createContextMenuForTreeItem(currentTreeItem);
+                            setOnMouseClicked(event -> {
+                                if (event.getButton() == MouseButton.SECONDARY) {
+                                    setContextMenu(contextMenu);
+                                    contextMenu.show(this, event.getScreenX(), event.getScreenY());
+                                } else {
+                                    setContextMenu(null);
+                                }
+                            });
+                        } else {
+                            setContextMenu(null);
+                            setOnMouseClicked(null);
+                        }
+
+                        if (item instanceof DTO_HocPhan) {
+                            setFont(Font.font(20));
+                        } else if (item instanceof DTO_Chuong) {
+                            setFont(Font.font(18));
+                        } else if (item instanceof DTO_BaiHoc) {
+                            setFont(Font.font(16));
+                        }
                     }
                 }
-            }
+
+                private ContextMenu createContextMenuForTreeItem(TreeItem<HienThi> treeItem) {
+                    ContextMenu contextMenu = new ContextMenu();
+                    MenuItem themItem = null;
+                    MenuItem xoaItem = new MenuItem("Xóa");
+                    MenuItem hoanThanhItem = new MenuItem("Hoàn thành");
+                    MenuItem chiTietItem = new MenuItem("Hiển thị chi tiết");
+
+                    HienThi itemValue = treeItem.getValue();
+
+                    if (itemValue instanceof DTO_HocPhan) {
+                        themItem = new MenuItem("Thêm chương");
+                    } else if (itemValue instanceof DTO_Chuong) {
+                        themItem = new MenuItem("Thêm bài học");
+                    }
+
+                    if (themItem != null) {
+                        contextMenu.getItems().add(themItem);
+                        themItem.setOnAction(event -> {
+                            if (itemValue instanceof DTO_HocPhan) {
+                                try {
+                                    mahienthi = ((DTO_HocPhan) itemValue).getMaHP();
+                                    HienThiCT("/app/doan/ThemC.fxml");
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                setupTreeView(hpList);
+                            } else{
+                                mahienthi = ((DTO_Chuong) itemValue).getMaChuong();
+                                try {
+                                    HienThiCT("/app/doan/ThemBH.fxml");
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        });
+                    }
+
+                    xoaItem.setOnAction(event -> {
+                        if (treeItem != getTreeView().getRoot()) {
+                            TreeItem<HienThi> parent = treeItem.getParent();
+                            if (parent != null) {
+                                parent.getChildren().remove(treeItem);
+                                // Xử lý logic xóa dữ liệu tương ứng (ví dụ: gọi BLL để xóa)
+                                System.out.println("Xóa: " + treeItem.getValue().getDisplayName());
+                            }
+                        }
+                    });
+
+                    hoanThanhItem.setOnAction(event -> {
+                        // Xử lý logic hoàn thành (ví dụ: cập nhật trạng thái trong DTO và có thể trong database)
+                        System.out.println("Hoàn thành: " + itemValue.getDisplayName());
+                    });
+
+                    chiTietItem.setOnAction(event -> {
+                        // Xử lý logic hiển thị chi tiết
+                        if (itemValue instanceof DTO_HocPhan) {
+                            DTO_HocPhan hp = (DTO_HocPhan) itemValue;
+                            try {
+                                mahienthi = hp.getMaHP();
+                                HienThiCT("/app/doan/CTHP.fxml");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        } else if (itemValue instanceof DTO_Chuong) {
+                            DTO_Chuong c = (DTO_Chuong) itemValue;
+                            try {
+                                mahienthi = c.getMaChuong();
+                                HienThiCT("/app/doan/CTC.fxml");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        } else if (itemValue instanceof DTO_BaiHoc) {
+                            DTO_BaiHoc bh = (DTO_BaiHoc) itemValue;
+                            try {
+                                mahienthi = bh.getMaBH();
+                                HienThiCT("/app/doan/CTBH.fxml");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    });
+
+                    contextMenu.getItems().addAll(xoaItem, hoanThanhItem, chiTietItem);
+                    return contextMenu;
+                }
+            };
+            return cell;
         });
 
-        treeView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            HienThi selectedItem = newVal.getValue();
-            if (selectedItem instanceof DTO_HocPhan) {
-                DTO_HocPhan hp = (DTO_HocPhan) selectedItem;
-                try {
-                    mahienthi = hp.getMaHP();
-                    HienThiCT(hp.getMaHP(), "/app/doan/CTHP.fxml");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            } else if (selectedItem instanceof DTO_Chuong) {
-                DTO_Chuong c = (DTO_Chuong) selectedItem;
-                try {
-                    mahienthi = c.getMaChuong();
-                    HienThiCT(c.getMaChuong(), "/app/doan/CTC.fxml");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            } else if (selectedItem instanceof DTO_BaiHoc) {
-                DTO_BaiHoc c = (DTO_BaiHoc) selectedItem;
-                try {
-                    mahienthi = c.getMaBH();
-                    HienThiCT(c.getMaBH(), "/app/doan/CTBH.fxml");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
+        // Loại bỏ listener selectedItemProperty nếu bạn xử lý nhấp chuột trái trong setOnMouseClicked
+        // treeView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> { ... });
     }
 
-    private void HienThiCT(String ma, String fxml) throws IOException {
+    private void HienThiCT(String fxml) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent root = loader.load();
 
@@ -414,5 +509,6 @@ public class HTtodolist {
         }
         popupStage.showAndWait();
         loadListView(list);
+        setupTreeView(hpList);
     }
 }

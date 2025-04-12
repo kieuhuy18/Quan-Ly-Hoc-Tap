@@ -26,7 +26,6 @@ public class DAL_HocPhan {
                 hp.setMaHP(rs.getString("MaHocPhan"));
                 hp.setTenHP(rs.getString("TenHocPhan"));
                 hp.setGiangVien(rs.getString("GiangVien"));
-                hp.setLapLai(rs.getBoolean("LapLai"));
                 hp.setMoTa(rs.getString("MoTa"));
                 hp.setTrangThai(rs.getBoolean("TrangThai"));
                 hp.setMaTK(rs.getString("MaTaiKhoan"));
@@ -61,16 +60,15 @@ public class DAL_HocPhan {
     public boolean themHP(DTO_HocPhan hp){
         boolean result = false;
         try{
-            String sql = "INSERT INTO HocPhan VALUES(?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO HocPhan VALUES(?, ?, ?, ?, ?, ?)";
             conn = app.doan.DAL.DatabaseConnection.connect();
             p = conn.prepareStatement(sql);
             p.setString(1, hp.getMaHP());
             p.setString(2, hp.getTenHP());
             p.setString(3, hp.getGiangVien());
-            p.setBoolean(4, hp.getLapLai());
-            p.setString(5, hp.getMoTa());
-            p.setBoolean(6, hp.getTrangThai());
-            p.setString(7, hp.getMaTK());
+            p.setString(4, hp.getMoTa());
+            p.setBoolean(5, hp.getTrangThai());
+            p.setString(6, hp.getMaTK());
             if(p.executeUpdate() >= 1){
                 result = true;
             }
@@ -85,17 +83,17 @@ public class DAL_HocPhan {
     public boolean suaHP(DTO_HocPhan hp){
         boolean result = false;
         try{
-            String SQL = "UPDATE HocPhan SET MaHocPhan = ?, TenHocPhan = ?, GiangVien = ?, LapLai = ?, MoTa = ?, TrangThai = ?, MaHocPhan = ? WHERE MaHocPhan = ? ";
+            String SQL = "UPDATE HocPhan SET MaHocPhan = ?, TenHocPhan = ?, GiangVien = ?, MoTa = ?, TrangThai = ?, MaTaiKhoan = ? WHERE MaHocPhan = ? ";
             conn = app.doan.DAL.DatabaseConnection.connect();
             p = conn.prepareStatement(SQL);
             p.setString(1, hp.getMaHP());
+            System.out.println(hp.getMaHP());
             p.setString(2, hp.getTenHP());
             p.setString(3, hp.getGiangVien());
-            p.setBoolean(4, hp.getLapLai());
-            p.setString(5, hp.getMoTa());
-            p.setBoolean(6, hp.getTrangThai());
-            p.setString(7, hp.getMaTK());
-            p.setString(8, hp.getMaHP());
+            p.setString(4, hp.getMoTa());
+            p.setBoolean(5, hp.getTrangThai());
+            p.setString(6, hp.getMaTK());
+            p.setString(7, hp.getMaHP());
             p.executeUpdate();
             if(p.executeUpdate() >= 1){
                 result = true;

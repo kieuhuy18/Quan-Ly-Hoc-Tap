@@ -1,14 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="app.doan.GUI.CTC"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="540.0" prefWidth="1000.0" style="-fx-background-color: D9D9D9; -fx-border-color: black;" stylesheets="@style/CTC.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.doan.GUI.CTC">
+   <children>
+      <VBox layoutX="-2.0" layoutY="-2.0" prefHeight="561.0" prefWidth="1012.0" style="-fx-background-color: D9D9D9; -fx-border-color: black;" stylesheets="@style/CTC.css">
+         <children>
+            <ImageView fx:id="IMclose" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/X.png" />
+               </image>
+               <VBox.margin>
+                  <Insets left="927.0" top="15.0" />
+               </VBox.margin>
+            </ImageView>
+            <HBox maxWidth="953.0" prefHeight="46.0" prefWidth="939.0" style="-fx-background-color: EEEEEE; -fx-background-radius: 25;">
+               <VBox.margin>
+                  <Insets left="30.0" right="30.0" top="15.0" />
+               </VBox.margin>
+               <children>
+                  <Label fx:id="LBcheck">
+                     <HBox.margin>
+                        <Insets left="16.0" right="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <StackPane fx:id="container" prefHeight="48.0" prefWidth="717.0">
+                     <children>
+                        <TextField fx:id="TXTtieude" prefHeight="46.0" prefWidth="347.0" />
+                        <Label fx:id="displayLabel" prefHeight="43.0" prefWidth="718.0">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets bottom="8.0" top="8.0" />
+                     </HBox.margin>
+                  </StackPane>
+               </children>
+            </HBox>
+            <VBox prefHeight="48.0" prefWidth="939.0" style="-fx-background-color: EEEEEE; -fx-background-radius: 25;">
+               <VBox.margin>
+                  <Insets left="30.0" right="30.0" top="15.0" />
+               </VBox.margin>
+               <children>
+                  <HBox prefHeight="63.0" prefWidth="939.0">
+                     <children>
+                        <Label text="Trạng thái: ">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="30.0" top="8.0" />
+                           </HBox.margin>
+                        </Label>
+                        <ComboBox fx:id="CBBtrangthai" prefHeight="26.0" prefWidth="208.0">
+                           <HBox.margin>
+                              <Insets left="20.0" top="8.0" />
+                           </HBox.margin>
+                        </ComboBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="336.0" prefWidth="939.0" style="-fx-background-color: EEEEEE; -fx-background-radius: 25;">
+               <VBox.margin>
+                  <Insets left="30.0" right="30.0" top="15.0" />
+               </VBox.margin>
+               <children>
+                  <Label text="Mô tả">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="30.0" top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextArea fx:id="TAmota" prefHeight="265.0" prefWidth="939.0" style="-fx-background-color: EEEEEE;">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextArea>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>

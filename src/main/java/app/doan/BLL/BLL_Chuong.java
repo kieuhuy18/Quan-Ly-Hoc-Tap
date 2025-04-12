@@ -20,29 +20,47 @@ public class BLL_Chuong {
         return true;
     }
 
+    public DTO_Chuong tim(String mac){
+        tailist();
+        for(DTO_Chuong c : cList){
+            if(c.getMaChuong().equals(mac)){
+                return c;
+            }
+        }
+        return null;
+    }
+
     public boolean them1(DTO_Chuong c){
         return dalc.themC(c);
     }
 
-    public String tangma(){
+    public String tangma() {
         dalc.getallClist();
         int maxNumber = 0;
 
-        if(cList.isEmpty()){
-            return "c" + 1;
+        if (cList.isEmpty()) {
+            return "c1";
         }
 
-        for(DTO_Chuong c : cList){
-            if (c.getMaChuong().matches("c\\d+")) { // Kiểm tra định dạng "hpX"
-                int number = Integer.parseInt(c.getMaChuong().substring(2)); // Lấy số từ "hpX"
-                if (number > maxNumber) {
-                    maxNumber = number;
+        for (DTO_Chuong c : cList) {
+            String ma = c.getMaChuong();
+
+            if (ma != null && ma.startsWith("c") && ma.length() > 1) {
+                String soStr = ma.substring(1); // lấy phần số sau "c"
+                try {
+                    int number = Integer.parseInt(soStr);
+                    if (number > maxNumber) {
+                        maxNumber = number;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println(e);
                 }
             }
         }
-        maxNumber  = maxNumber + 1;
-        return "c" + maxNumber;
+
+        return "c" + (maxNumber + 1);
     }
+
 
     public ArrayList<DTO_Chuong> timtheohocphan(String mahp){
         ArrayList<DTO_Chuong> chp = new ArrayList<>();
@@ -53,4 +71,6 @@ public class BLL_Chuong {
         }
         return chp;
     }
+
+    public Boolean sua(DTO_Chuong c){return dalc.suaC(c);}
 }

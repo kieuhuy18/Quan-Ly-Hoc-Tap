@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import static app.doan.DAL.DAL_BaiHoc.bhList;
 
 public class BLL_BaiHoc {
-    DAL_BaiHoc dalc = new DAL_BaiHoc();
+    DAL_BaiHoc dalbh = new DAL_BaiHoc();
 
     public boolean tailist(){
         try {
-            dalc.getallBHlist();
+            dalbh.getallBHlist();
         }catch(Exception ex){
             System.out.println(ex);
             return false;
@@ -21,11 +21,11 @@ public class BLL_BaiHoc {
     }
 
     public boolean them1(DTO_BaiHoc jbh){
-        return dalc.themC(jbh);
+        return dalbh.themBH(jbh);
     }
 
     public String tangma(){
-        dalc.getallBHlist();
+        dalbh.getallBHlist();
         int maxNumber = 0;
 
         if(bhList.isEmpty()){
@@ -52,5 +52,19 @@ public class BLL_BaiHoc {
             }
         }
         return chp;
+    }
+
+    public Boolean sua(DTO_BaiHoc bh){
+        return dalbh.suaBH(bh);
+    }
+
+    public DTO_BaiHoc tim(String ma){
+        tailist();
+        for(DTO_BaiHoc b : bhList){
+            if(b.getMaBH().equals(ma)){
+                return b;
+            }
+        }
+        return null;
     }
 }

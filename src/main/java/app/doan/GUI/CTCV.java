@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
@@ -24,9 +23,6 @@ public class CTCV {
 
     @FXML
     private TextField TXTut;
-
-    @FXML
-    private StackPane container;
 
     @FXML
     private Label displayLabel1;
@@ -67,7 +63,7 @@ public class CTCV {
     private final BLL_CongViec bllcv = new BLL_CongViec();
     public DTO_CongViec c = new DTO_CongViec();
     DTO_CongViec cv = bllcv.tim(mahienthi);
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     @FXML
     public void initialize() {
@@ -192,8 +188,8 @@ public class CTCV {
                 c.setThoiGian(date);
             }
             c.setDoUuTien(dut);
-            c.setPomoUT(Integer.parseInt(displayLabel2.getText()));
-            c.setPomoTT(Integer.parseInt(displayLabel3.getText()));
+            c.setPomoUT(Integer.parseInt(displayLabel3.getText()));
+            c.setPomoTT(Integer.parseInt(displayLabel2.getText()));
             c.setGhiChu(TAghichu.getText());
             Stage stage = (Stage) IMclose.getScene().getWindow();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
