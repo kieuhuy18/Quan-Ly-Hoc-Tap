@@ -41,6 +41,7 @@ public class ThemHP {
     @FXML
     public void initialize(){
         CBBtrangthai.getItems().addAll("Chưa hoàn thành", "Hoàn thành");
+        CBBtrangthai.setValue("Chưa hoàn thành");
 
         CBBtrangthai.setCellFactory(lv -> new ListCell<String>() {
             @Override

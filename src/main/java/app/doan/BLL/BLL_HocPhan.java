@@ -3,7 +3,11 @@ package app.doan.BLL;
 import app.doan.DAL.DAL_HocPhan;
 import app.doan.DTO.DTO_HocPhan;
 
+import java.util.ArrayList;
+
 import static app.doan.DAL.DAL_HocPhan.hpList;
+import static app.doan.DAL.DAL_HocPhan.hpListAll;
+import static app.doan.GUI.HTDangNhap.MaND;
 
 public class BLL_HocPhan {
     DAL_HocPhan dalhp = new DAL_HocPhan();
@@ -23,14 +27,14 @@ public class BLL_HocPhan {
     }
 
     public String tangma(){
-        dalhp.getallHPlist();
+        dalhp.getallHP();
         int maxNumber = 0;
 
-        if(hpList.isEmpty()){
+        if(hpListAll.isEmpty()){
             return "hp" + 1;
         }
 
-        for(DTO_HocPhan hp : hpList){
+        for(DTO_HocPhan hp : hpListAll){
             if (hp.getMaHP().matches("hp\\d+")) { // Kiểm tra định dạng "hpX"
                 int number = Integer.parseInt(hp.getMaHP().substring(2)); // Lấy số từ "hpX"
                 if (number > maxNumber) {
@@ -51,7 +55,11 @@ public class BLL_HocPhan {
         return null;
     }
 
-    public Boolean sua(DTO_HocPhan hp){
+    public boolean sua(DTO_HocPhan hp){
         return dalhp.suaHP(hp);
+    }
+
+    public boolean xoa(DTO_HocPhan hp){
+        return dalhp.xoahp(hp);
     }
 }

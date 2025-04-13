@@ -11,6 +11,7 @@ import java.util.Set;
 
 import static app.doan.DAL.DAL_CongViec.cvList;
 import static app.doan.DAL.DAL_CongViec.cvndList;
+import static app.doan.GUI.HTtodolist.mahienthi;
 
 public class BLL_CongViec {
     public DAL_CongViec dalcv = new DAL_CongViec();
@@ -18,6 +19,7 @@ public class BLL_CongViec {
     public static ArrayList<DTO_CongViec> plan = new ArrayList<>();
     public static ArrayList<DTO_CongViec> done = new ArrayList<>();
     public static ArrayList<DTO_CongViec> overdate = new ArrayList<>();
+    public static ArrayList<DTO_CongViec> dscvbh = new ArrayList<>();
     public static int ht = 0;
     public static int cht = 0;
 
@@ -78,6 +80,15 @@ public class BLL_CongViec {
                 done.add(cv);
             }if(cv.getThoiGian() != null && cv.getThoiGian().isBefore(LocalDate.now()) && !cv.getTrangThai()){
                 overdate.add(cv);
+            }
+        }
+    }
+
+    public void dscv(){
+        dscvbh.clear();
+        for(DTO_CongViec cv:cvList){
+            if(cv.getMaBH() != null && cv.getMaBH().equals(mahienthi)){
+                dscvbh.add(cv);
             }
         }
     }

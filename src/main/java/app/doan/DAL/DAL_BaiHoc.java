@@ -74,7 +74,6 @@ public class DAL_BaiHoc {
             p.setString(2, c.getTenBH());
             p.setString(3, c.getGhiChu());
             if (c.getNgayHoc() != null) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 p.setString(4, c.getNgayHoc().format(formatter));
             } else {
                 p.setString(4, "Trống");
@@ -173,6 +172,7 @@ public class DAL_BaiHoc {
         boolean result = false;
         try{
             String sql = "DELETE FROM BaiHoc WHERE MaBaiHoc = ?";
+            conn = app.doan.DAL.DatabaseConnection.connect();
             p = conn.prepareStatement(sql);
             p.setString(1, kh.getMaBH());
             if(p.executeUpdate() >= 1){

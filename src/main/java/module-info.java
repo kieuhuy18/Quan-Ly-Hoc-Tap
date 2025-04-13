@@ -1,7 +1,5 @@
 module app.doan {
-    requires javafx.controls;
     requires javafx.fxml;
-    requires javafx.web;
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
@@ -9,6 +7,7 @@ module app.doan {
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
     requires jakarta.mail;
+    requires eu.hansolo.tilesfx;
     //requires eu.hansolo.tilesfx;
 
     opens app.doan to javafx.fxml;

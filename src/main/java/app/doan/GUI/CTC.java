@@ -81,26 +81,39 @@ public class CTC {
 
         IMclose.setOnMouseClicked(event -> {
             DTO_Chuong chuong = new DTO_Chuong();
-            chuong.setMaChuong(c.getMaChuong());
-            chuong.setTenChuong(displayLabel.getText());
-            chuong.setMoTa(TAmota.getText());
-            chuong.setMaHP(c.getMaHP());
-            if(CBBtrangthai.getValue().equals("Chưa hoàn thành")){
-                chuong.setTrangThai(false);
-            }else chuong.setTrangThai(true);
-            Stage stage = (Stage) IMclose.getScene().getWindow();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Xác nhận");
-            alert.setHeaderText("Lưu thay đổi?");
+            if(TXTtieude.getText().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Cảnh báo");
+                alert.setHeaderText("Không có tiêu đề");
+                alert.setContentText("Vui lòng nhập tiêu đề.");
+                alert.showAndWait();
+            }else{
+                chuong.setMaChuong(c.getMaChuong());
+                chuong.setTenChuong(displayLabel.getText());
+                chuong.setMoTa(TAmota.getText());
+                chuong.setMaHP(c.getMaHP());
+                if(CBBtrangthai.getValue().equals("Chưa hoàn thành")){
+                    chuong.setTrangThai(false);
+                }else chuong.setTrangThai(true);
+                Stage stage = (Stage) IMclose.getScene().getWindow();
+                if(chuong.equals(c)){
+                    stage.close();
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Xác nhận");
+                    alert.setHeaderText("Lưu thay đổi?");
 
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK){
-                bllc.sua(chuong);
-                stage.close();
-            }else {
-                bllc.sua(c);
-                stage.close();
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.OK){
+                        bllc.sua(chuong);
+                        stage.close();
+                    }else {
+                        bllc.sua(c);
+                        stage.close();
+                    }
+                }
             }
+
         });
     }
 

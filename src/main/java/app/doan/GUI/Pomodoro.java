@@ -31,7 +31,6 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.StringTokenizer;
@@ -98,6 +97,10 @@ public class Pomodoro {
         });
     }
 
+    private void setupList(){
+
+    }
+
     @FXML
     public void initialize(){
         if(cvht == null){
@@ -129,6 +132,7 @@ public class Pomodoro {
                     String state = task.getTrangThai() ? "checked" : "unchecked";
                     checkBoxLabel.setGraphic(IconProvider.getIcon(state + "_" + color));
                     bllcv.sua(task);
+                    loadListView();
                 });
 
                 taskName.setStyle("-fx-font-size: 18px; -fx-text-fill: gray;");
@@ -158,7 +162,7 @@ public class Pomodoro {
                 pomoBox.setAlignment(Pos.CENTER);
                 HBox.setMargin(pomoBox, new Insets(0, 30, 0, 0));
 
-                taskLayout.getChildren().addAll(checkBoxContainer, taskInfo);
+                taskLayout.getChildren().addAll(checkBoxContainer, taskInfo, spacer, pomoBox);
             }
 
             @Override
@@ -313,6 +317,7 @@ public class Pomodoro {
     public void loadListView() {
         bllcv.tailist();
         bllcv.chialist();
+        observableList.setAll(today);
     }
 
     private void toggleCheckbox(DTO_CongViec cv) {
@@ -326,5 +331,6 @@ public class Pomodoro {
         String state = cv.getTrangThai() ? "checked" : "unchecked";
         LBcheck.setGraphic(IconProvider.getIcon(state + "_" + color));
         bllcv.sua(cv);
+        loadListView();
     }
 }

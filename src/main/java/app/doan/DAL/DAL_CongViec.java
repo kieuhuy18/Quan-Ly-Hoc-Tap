@@ -273,6 +273,7 @@ public class DAL_CongViec {
         boolean result = false;
         try{
             String sql = "DELETE FROM CongViec WHERE MaCongViec = ?";
+            conn = app.doan.DAL.DatabaseConnection.connect();
             p = conn.prepareStatement(sql);
             p.setString(1, cv.getMaCV());
             if(p.executeUpdate() >= 1){

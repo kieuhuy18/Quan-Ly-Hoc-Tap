@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="830.0" minHeight="780.0" prefHeight="780.0" prefWidth="1440.0" stylesheets="@style/HTTrangChu.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.doan.GUI.HTTrangChu">
+<StackPane fx:id="rootPane" maxHeight="830.0" minHeight="780.0" prefHeight="780.0" prefWidth="1440.0" stylesheets="@style/HTTrangChu.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.doan.GUI.HTTrangChu">
    <children>
       <BorderPane fx:id="mainPane" layoutX="-1.0" layoutY="-1.0" maxHeight="780.0" minHeight="780.0" prefHeight="780.0" prefWidth="1440.0" style="-fx-background-color: D9D9D9;">
          <top>
@@ -31,14 +31,6 @@
                         </Label>
                         <StackPane prefHeight="100.0" prefWidth="1145.0" HBox.hgrow="ALWAYS">
                            <children>
-                              <TextField maxWidth="746.0" prefHeight="58.0" prefWidth="746.0" style="-fx-background-color: EEEEEE;">
-                                 <StackPane.margin>
-                                    <Insets left="115.0" right="250.0" />
-                                 </StackPane.margin>
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </TextField>
                               <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="1074.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" x="1074.0" y="29.0" StackPane.alignment="TOP_RIGHT">
                                  <StackPane.margin>
                                     <Insets right="350.0" top="17.0" />
@@ -47,6 +39,14 @@
                                     <Image url="@image/Search.png" />
                                  </image>
                               </ImageView>
+                              <TextField fx:id="TXTtimkiem" maxWidth="746.0" prefHeight="58.0" prefWidth="746.0" style="-fx-background-color: EEEEEE;">
+                                 <StackPane.margin>
+                                    <Insets left="115.0" right="250.0" />
+                                 </StackPane.margin>
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
                            </children>
                         </StackPane>
                      </children>
@@ -56,7 +56,7 @@
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="BTtrangchu" maxHeight="60.0" maxWidth="60.0" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0">
+                        <Button fx:id="BTtrangchu" maxHeight="60.0" maxWidth="60.0" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" onAction="#showTrangChu" prefHeight="60.0" prefWidth="60.0">
                            <HBox.margin>
                               <Insets left="334.0" right="152.0" />
                            </HBox.margin></Button>
@@ -84,5 +84,12 @@
                </BorderPane.margin>
             </AnchorPane>
          </center></BorderPane>
+      <VBox fx:id="vboxSuggestions" maxHeight="150.0" maxWidth="746.0" prefHeight="177.0" prefWidth="746.0" style="-fx-background-color: #808080; -fx-padding: 5; -fx-background-radius: 5;" visible="false" StackPane.alignment="TOP_LEFT"> <VBox.margin>
+         <Insets top="70.0" />
+      </VBox.margin>
+         <StackPane.margin>
+            <Insets left="348.0" top="95.0" />
+         </StackPane.margin>
+      </VBox>
    </children>
-</AnchorPane>
+</StackPane>

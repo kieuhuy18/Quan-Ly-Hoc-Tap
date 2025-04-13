@@ -1,5 +1,7 @@
 package app.doan.DTO;
 
+import java.util.Objects;
+
 public class DTO_Chuong implements HienThi{
     private String maChuong;
     private String tenChuong;
@@ -61,4 +63,19 @@ public class DTO_Chuong implements HienThi{
     public String getDisplayName() {
         return tenChuong;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DTO_Chuong that = (DTO_Chuong) o;
+
+        return trangThai == that.trangThai &&
+                Objects.equals(maChuong, that.maChuong) &&
+                Objects.equals(tenChuong, that.tenChuong) &&
+                Objects.equals(moTa, that.moTa) &&
+                Objects.equals(maHP, that.maHP);
+    }
+
 }

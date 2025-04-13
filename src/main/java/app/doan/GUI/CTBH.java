@@ -121,31 +121,43 @@ public class CTBH {
 
         IMclose.setOnMouseClicked(event -> {
             DTO_BaiHoc b = new DTO_BaiHoc();
-            b.setMaBH(bh.getMaBH());
-            b.setTenBH(displayLabel.getText());
-            b.setGhiChu(TAmota.getText());
-            if(CBBtrangthai.getValue().equals("Chưa hoàn thành")){
-                b.setTrangThai(false);
-            }else b.setTrangThai(true);
-            if("Trống".equals(LBdate.getText())){
-                b.setNgayHoc(null);
-            }else {
-                LocalDate date = LocalDate.parse(LBdate.getText(), formatter);
-                b.setNgayHoc(date);
-            }
-            b.setMaChuong(bh.getMaChuong());
-            Stage stage = (Stage) IMclose.getScene().getWindow();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Xác nhận");
-            alert.setHeaderText("Lưu thay đổi?");
+            if(TXTtieude.getText().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Cảnh báo");
+                alert.setHeaderText("Không có tiêu đề");
+                alert.setContentText("Vui lòng nhập tiêu đề.");
+                alert.showAndWait();
+            }else{
+                b.setMaBH(bh.getMaBH());
+                b.setTenBH(displayLabel.getText());
+                b.setGhiChu(TAmota.getText());
+                if(CBBtrangthai.getValue().equals("Chưa hoàn thành")){
+                    b.setTrangThai(false);
+                }else b.setTrangThai(true);
+                if("Trống".equals(LBdate.getText())){
+                    b.setNgayHoc(null);
+                }else {
+                    LocalDate date = LocalDate.parse(LBdate.getText(), formatter);
+                    b.setNgayHoc(date);
+                }
+                b.setMaChuong(bh.getMaChuong());
+                Stage stage = (Stage) IMclose.getScene().getWindow();
+                if(b.equals(bh)){
+                    stage.close();
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Xác nhận");
+                    alert.setHeaderText("Lưu thay đổi?");
 
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK){
-                bllbh.sua(b);
-                stage.close();
-            }else {
-                bllbh.sua(bh);
-                stage.close();
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.OK){
+                        bllbh.sua(b);
+                        stage.close();
+                    }else {
+                        bllbh.sua(bh);
+                        stage.close();
+                    }
+                }
             }
         });
     }

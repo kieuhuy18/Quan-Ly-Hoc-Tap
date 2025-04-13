@@ -78,29 +78,27 @@
 }
 
 .scroll-bar {
-    -fx-opacity: 0; /* Ẩn thanh cuộn mặc định */
+    -fx-opacity: 0;
     -fx-background-color: transparent;
     -fx-pref-width: 0px;
     -fx-pref-height: 0px;
 }
 
-/* Khi di chuột vào, thanh cuộn hiển thị */
 .scroll-pane:hover .scroll-bar {
-    -fx-opacity: 1; /* Hiện thanh cuộn */
-    -fx-pref-width: 8px;  /* Độ rộng của thanh cuộn */
+    -fx-opacity: 1;
+    -fx-pref-width: 8px;
     -fx-pref-height: 8px;
-    -fx-background-color: rgba(0, 0, 0, 0.3); /* Màu xám nhạt */
+    -fx-background-color: rgba(0, 0, 0, 0.3);
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: rgba(100, 100, 100, 0.5); /* Màu thanh trượt */
+    -fx-background-color: rgba(100, 100, 100, 0.5);
     -fx-background-radius: 5px;
 }
 
-/* Ẩn thanh cuộn ngang */
 .scroll-pane .scroll-bar:horizontal {
-    -fx-opacity: 0;  /* Làm mờ thanh trượt */
-    -fx-pref-height: 0px; /* Giảm chiều cao về 0 */
+    -fx-opacity: 0;
+    -fx-pref-height: 0px;
     -fx-max-height: 0px;
     -fx-min-height: 0px;
 }
@@ -113,5 +111,9 @@
 .tree-view .tree-cell {
     -fx-background-color: #EEEEEE;
     -fx-text-fill: black;
+}
+
+.tree-view .tree-cell:hover {
+    -fx-background-color: #aaaaaa;
 }
 

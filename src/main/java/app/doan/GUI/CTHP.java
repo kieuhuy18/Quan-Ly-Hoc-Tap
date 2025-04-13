@@ -124,17 +124,21 @@ public class CTHP {
             }
             h.setMoTa(TAmota.getText());
             h.setMaTK(hp.getMaTK());
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Xác nhận");
-            alert.setHeaderText("Lưu thay đổi?");
+            if(h.equals(hp)){
+                stage.close();
+            }else{
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Xác nhận");
+                alert.setHeaderText("Lưu thay đổi?");
 
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK){
-                bllhp.sua(h);
-                stage.close();
-            }else {
-                bllhp.sua(hp);
-                stage.close();
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK){
+                    bllhp.sua(h);
+                    stage.close();
+                }else {
+                    bllhp.sua(hp);
+                    stage.close();
+                }
             }
         });
     }

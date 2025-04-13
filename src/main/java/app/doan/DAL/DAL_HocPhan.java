@@ -6,21 +6,50 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import static app.doan.DAL.DatabaseConnection.close;
+import static app.doan.GUI.HTDangNhap.MaND;
 
 public class DAL_HocPhan {
     public static Connection conn;
     public Statement stm = null;
     public static PreparedStatement p = null;
     public static ArrayList<DTO_HocPhan> hpList = new ArrayList<DTO_HocPhan>();
+    public static ArrayList<DTO_HocPhan> hpListAll = new ArrayList<DTO_HocPhan>();
 
-    public ArrayList<DTO_HocPhan> getallHPlist(){
+    public ArrayList<DTO_HocPhan> getallHP(){
         try{
-            hpList.clear();
+            hpListAll.clear();
             String sql = "SELECT * FROM HocPhan";
             Connection conn = app.doan.DAL.DatabaseConnection.connect();
             assert conn != null;
             stm = conn.createStatement();
             ResultSet rs = stm.executeQuery(sql);
+            while(rs.next()){
+                DTO_HocPhan hp = new DTO_HocPhan();
+                hp.setMaHP(rs.getString("MaHocPhan"));
+                hp.setTenHP(rs.getString("TenHocPhan"));
+                hp.setGiangVien(rs.getString("GiangVien"));
+                hp.setMoTa(rs.getString("MoTa"));
+                hp.setTrangThai(rs.getBoolean("TrangThai"));
+                hp.setMaTK(rs.getString("MaTaiKhoan"));
+                hpListAll.add(hp);
+            }
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }finally{
+            close();
+        }
+        return hpList;
+    }
+
+    public ArrayList<DTO_HocPhan> getallHPlist(){
+        try{
+            hpList.clear();
+            String sql = "SELECT * FROM HocPhan WHERE MaTaiKhoan = ?";
+            Connection conn = app.doan.DAL.DatabaseConnection.connect();
+            assert conn != null;
+            p = conn.prepareStatement(sql);
+            p.setString(1, MaND);
+            ResultSet rs = p.executeQuery();
             while(rs.next()){
                 DTO_HocPhan hp = new DTO_HocPhan();
                 hp.setMaHP(rs.getString("MaHocPhan"));

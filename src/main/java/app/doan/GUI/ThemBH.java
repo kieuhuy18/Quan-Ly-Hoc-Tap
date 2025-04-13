@@ -98,9 +98,9 @@ public class ThemBH {
             datePicker.setDisable(false);
             datePicker.show();
         });
-        datePicker.setOnAction(event -> { //Xu ly su kien khi chon ngay
+        datePicker.setOnAction(event -> {
             d = datePicker.getValue();
-            String selectedDate = datePicker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            String selectedDate = datePicker.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
             LBdate.setText(selectedDate);
             datePicker.setOpacity(0);
             datePicker.setDisable(true);

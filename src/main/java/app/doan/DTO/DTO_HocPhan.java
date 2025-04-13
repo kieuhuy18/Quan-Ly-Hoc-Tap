@@ -1,5 +1,7 @@
 package app.doan.DTO;
 
+import java.util.Objects;
+
 public class DTO_HocPhan implements HienThi {
     private String maHP;
     private String tenHP;
@@ -88,4 +90,21 @@ public class DTO_HocPhan implements HienThi {
     public String getDisplayName() {
         return tenHP;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DTO_HocPhan that = (DTO_HocPhan) o;
+
+        return trangThai == that.trangThai &&
+                lapLai == that.lapLai &&
+                Objects.equals(maHP, that.maHP) &&
+                Objects.equals(tenHP, that.tenHP) &&
+                Objects.equals(giangVien, that.giangVien) &&
+                Objects.equals(moTa, that.moTa) &&
+                Objects.equals(maTK, that.maTK);
+    }
+
 }

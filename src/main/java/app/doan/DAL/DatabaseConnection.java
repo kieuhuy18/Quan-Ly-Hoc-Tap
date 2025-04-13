@@ -5,8 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
-    //private static final String DB_PATH = Paths.get("src/main/resources/database.db").toAbsolutePath().toString();
-    //private static final String URL = "jdbc:sqlite:" + DB_PATH;
     static String url = "jdbc:sqlite:C:\\Users\\pc\\IdeaProjects\\DoAn\\csdl.db";
     public static Connection c;
 

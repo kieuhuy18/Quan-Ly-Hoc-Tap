@@ -207,24 +207,18 @@ public class NguoiDung {
                 int pomodoroCount = pomodoroData.getOrDefault(currentDate, 0);
                 if (pomodoroCount == 0) {
                     background.setFill(Color.LIGHTGRAY);
-                } else if (pomodoroCount == 2) {
-                    background.setFill(Color.web("#e0f7fa")); // Xanh nhạt
-                } else if (pomodoroCount == 4) {
-                    background.setFill(Color.web("#b2ebf2")); // Xanh nhạt hơn
-                } else if (pomodoroCount == 8) {
-                    background.setFill(Color.web("#80deea")); // Xanh vừa
-                } else if (pomodoroCount == 16) {
-                    background.setFill(Color.web("#4dd0e1")); // Xanh đậm hơn
-                } else if (pomodoroCount > 16) {
-                    background.setFill(Color.web("#26c6da")); // Xanh đậm nhất hoặc màu khác
-                } else {
-                    background.setFill(Color.WHITE);
+                } else if (pomodoroCount > 0 && pomodoroCount < 4) {
+                    background.setFill(Color.web("#e0f7fa"));
+                } else if (pomodoroCount > 3 && pomodoroCount < 8) {
+                    background.setFill(Color.web("#b2ebf2"));
+                } else if (pomodoroCount > 7 && pomodoroCount < 16) {
+                    background.setFill(Color.web("#80deea"));
+                } else{
+                    background.setFill(Color.web("#4dd0e1"));
                 }
 
-                // Highlight ngày hiện tại bằng màu nền và viền đen
                 if (currentYearMonth.equals(YearMonth.from(today)) && day == today.getDayOfMonth()) {
-                    background.setFill(Color.web("#b3e6ff")); // Màu nền highlight
-                    background.setStroke(Color.BLACK); // Viền đen cho ngày hiện tại
+                    background.setStroke(Color.BLACK);
                 }
             }
 

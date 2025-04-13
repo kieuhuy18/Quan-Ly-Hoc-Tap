@@ -1,6 +1,7 @@
 package app.doan.DTO;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class DTO_BaiHoc implements HienThi{
     private String maBH;
@@ -73,4 +74,20 @@ public class DTO_BaiHoc implements HienThi{
     public String getDisplayName() {
         return tenBH;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DTO_BaiHoc that = (DTO_BaiHoc) o;
+
+        return trangThai == that.trangThai &&
+                Objects.equals(maBH, that.maBH) &&
+                Objects.equals(tenBH, that.tenBH) &&
+                Objects.equals(ghiChu, that.ghiChu) &&
+                Objects.equals(ngayHoc, that.ngayHoc) &&
+                Objects.equals(maChuong, that.maChuong);
+    }
+
 }

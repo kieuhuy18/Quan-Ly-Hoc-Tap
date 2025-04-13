@@ -33,6 +33,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static app.doan.BLL.BLL_CongViec.*;
 import static app.doan.DAL.DAL_CongViec.cvList;
@@ -219,7 +220,7 @@ public class HTtodolist {
         a.setOnAction(this::handleButtonA);
 
         //nut b
-        LBdate.setText("Lich trong");
+        LBdate.setText("Lịch trống");
 
         datePicker.setOpacity(0);
         datePicker.setDisable(true);
@@ -292,17 +293,24 @@ public class HTtodolist {
 
     @FXML
     private void handleButtonA(ActionEvent event) {
-        DTO_CongViec cv = new DTO_CongViec();
-        cv.setMaCV(bllcv.tangma());
-        cv.setTenCV(TFthem.getText());
-        cv.setThoiGian(d);
-        cv.setDoUuTien(dut);
-        cv.setPomoTT(0);
-        cv.setPomoUT(0);
-        bllcv.them1(cv);
-        list = 1;
-        loadListView(list);
-        TFthem.setText(null);
+        if(LBdate.getText().equals("Lịch trống")){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Cảnh báo");
+            alert.setHeaderText("Vui lòng chọn ngày thực hiện!");
+            alert.showAndWait();
+        }else{
+            DTO_CongViec cv = new DTO_CongViec();
+            cv.setMaCV(bllcv.tangma());
+            cv.setTenCV(TFthem.getText());
+            cv.setThoiGian(d);
+            cv.setDoUuTien(dut);
+            cv.setPomoTT(0);
+            cv.setPomoUT(0);
+            bllcv.them1(cv);
+            list = 1;
+            loadListView(list);
+            TFthem.setText(null);
+        }
     }
 
     private void handleHBoxClick(MouseEvent event) {
@@ -423,7 +431,6 @@ public class HTtodolist {
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
-                                setupTreeView(hpList);
                             } else{
                                 mahienthi = ((DTO_Chuong) itemValue).getMaChuong();
                                 try {
@@ -435,20 +442,64 @@ public class HTtodolist {
                         });
                     }
 
+                    if (itemValue instanceof DTO_BaiHoc) {
+                        MenuItem dsCongViecItem = new MenuItem("Danh sách công việc");
+                        contextMenu.getItems().add(dsCongViecItem);
+                        dsCongViecItem.setOnAction(event -> {
+                            mahienthi = ((DTO_BaiHoc) itemValue).getMaBH();
+                            bllcv.dscv();
+                            observableList.setAll(dscvbh);
+                        });
+                    }
+
                     xoaItem.setOnAction(event -> {
-                        if (treeItem != getTreeView().getRoot()) {
-                            TreeItem<HienThi> parent = treeItem.getParent();
-                            if (parent != null) {
-                                parent.getChildren().remove(treeItem);
-                                // Xử lý logic xóa dữ liệu tương ứng (ví dụ: gọi BLL để xóa)
-                                System.out.println("Xóa: " + treeItem.getValue().getDisplayName());
+                        String txt;
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("Xác nhận");
+                        alert.setHeaderText("Xác nhận xóa?");
+                        if(itemValue instanceof DTO_HocPhan) {
+                            txt = "Tất cả các chương, bài học và công việc liên quan cũng sẽ bị xóa";
+                        }else if(itemValue instanceof DTO_Chuong){
+                            txt = "Tất cả các bài học và công việc liên quan cũng sẽ bị xóa";
+                        }else{
+                            txt = "Tất cả các công việc liên quan cũng sẽ bị xóa";
+                        }
+                        alert.setContentText(txt);
+
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.isPresent() && result.get() == ButtonType.OK){
+                            if (itemValue instanceof DTO_HocPhan) {
+                                bllhp.xoa((DTO_HocPhan) itemValue);
+                                bllhp.tailist();
+                                bllc.tailist();
+                                bllbh.tailist();
+                                setupTreeView(hpList);
+                            }else if (itemValue instanceof DTO_Chuong) {
+                                bllc.xoa((DTO_Chuong) itemValue);
+                                bllhp.tailist();
+                                bllc.tailist();
+                                bllbh.tailist();
+                                setupTreeView(hpList);
+                            }else {
+                                assert itemValue instanceof DTO_BaiHoc;
+                                bllbh.xoa((DTO_BaiHoc) itemValue);
+                                bllhp.tailist();
+                                bllc.tailist();
+                                bllbh.tailist();
+                                loadListView(1);
                             }
                         }
                     });
 
                     hoanThanhItem.setOnAction(event -> {
-                        // Xử lý logic hoàn thành (ví dụ: cập nhật trạng thái trong DTO và có thể trong database)
-                        System.out.println("Hoàn thành: " + itemValue.getDisplayName());
+                        if (itemValue instanceof DTO_HocPhan) {
+                            ((DTO_HocPhan) itemValue).setTrangThai(true);
+                        }else if (itemValue instanceof DTO_Chuong) {
+                            ((DTO_Chuong) itemValue).setTrangThai(true);
+                        }else {
+                            assert itemValue instanceof DTO_BaiHoc;
+                            ((DTO_BaiHoc) itemValue).setTrangThai(true);
+                        }
                     });
 
                     chiTietItem.setOnAction(event -> {
@@ -486,9 +537,6 @@ public class HTtodolist {
             };
             return cell;
         });
-
-        // Loại bỏ listener selectedItemProperty nếu bạn xử lý nhấp chuột trái trong setOnMouseClicked
-        // treeView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> { ... });
     }
 
     private void HienThiCT(String fxml) throws IOException {
@@ -509,6 +557,9 @@ public class HTtodolist {
         }
         popupStage.showAndWait();
         loadListView(list);
+        bllhp.tailist();
+        bllc.tailist();
+        bllbh.tailist();
         setupTreeView(hpList);
     }
 }

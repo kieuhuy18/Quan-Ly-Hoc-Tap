@@ -154,8 +154,9 @@ public class DAL_Chuong {
         boolean result = false;
         try{
             String sql = "DELETE FROM Chuong WHERE MaChuong = ?";
+            conn = app.doan.DAL.DatabaseConnection.connect();
             p = conn.prepareStatement(sql);
-            p.setString(1, kh.getMaHP());
+            p.setString(1, kh.getMaChuong());
             if(p.executeUpdate() >= 1){
                 result = true;
             }

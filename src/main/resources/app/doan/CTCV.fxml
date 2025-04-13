@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
@@ -59,7 +60,7 @@
                   </Button>
                </children>
             </HBox>
-            <VBox prefHeight="184.0" prefWidth="939.0" style="-fx-background-color: EEEEEE; -fx-background-radius: 25;">
+            <VBox prefHeight="285.0" prefWidth="934.0" style="-fx-background-color: EEEEEE; -fx-background-radius: 25;">
                <VBox.margin>
                   <Insets left="30.0" right="30.0" top="15.0" />
                </VBox.margin>
@@ -169,9 +170,29 @@
                         </ImageView>
                      </children>
                   </HBox>
+                  <HBox prefHeight="116.0" prefWidth="934.0">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label text="Bài học: ">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="30.0" top="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <ComboBox fx:id="CBBtenbh" prefHeight="35.0" prefWidth="264.0" style="-fx-background-color: white;">
+                           <HBox.margin>
+                              <Insets left="10.0" top="10.0" />
+                           </HBox.margin>
+                        </ComboBox>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
-            <VBox prefHeight="217.0" prefWidth="939.0" style="-fx-background-color: EEEEEE; -fx-background-radius: 25;">
+            <VBox prefHeight="213.0" prefWidth="934.0" style="-fx-background-color: EEEEEE; -fx-background-radius: 25;">
                <VBox.margin>
                   <Insets left="30.0" right="30.0" top="15.0" />
                </VBox.margin>
@@ -183,7 +204,10 @@
                      <VBox.margin>
                         <Insets left="30.0" top="15.0" />
                      </VBox.margin></Label>
-                  <TextArea fx:id="TAghichu" prefHeight="202.0" prefWidth="939.0" style="-fx-background-color: EEEEEE;" />
+                  <TextArea fx:id="TAghichu" prefHeight="162.0" prefWidth="934.0" style="-fx-background-color: EEEEEE; -fx-background-radius: 35;">
+                     <font>
+                        <Font size="18.0" />
+                     </font></TextArea>
                </children>
             </VBox>
          </children>

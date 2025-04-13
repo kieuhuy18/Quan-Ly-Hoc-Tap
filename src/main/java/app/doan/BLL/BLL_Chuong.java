@@ -2,17 +2,28 @@ package app.doan.BLL;
 
 import app.doan.DAL.DAL_Chuong;
 import app.doan.DTO.DTO_Chuong;
+import app.doan.DTO.DTO_HocPhan;
 
 import java.util.ArrayList;
 
 import static app.doan.DAL.DAL_Chuong.cList;
+import static app.doan.DAL.DAL_HocPhan.hpList;
 
 public class BLL_Chuong {
     DAL_Chuong dalc = new DAL_Chuong();
 
     public boolean tailist(){
         try {
+            ArrayList<DTO_Chuong> temp = new ArrayList<>();
             dalc.getallClist();
+            for(DTO_HocPhan hp:hpList){
+                for(DTO_Chuong c: cList){
+                    if (c.getMaHP().equals(hp.getMaHP())){
+                        temp.add(c);
+                    }
+                }
+            }
+            cList = temp;
         }catch(Exception ex){
             System.out.println(ex);
             return false;
@@ -72,5 +83,9 @@ public class BLL_Chuong {
         return chp;
     }
 
-    public Boolean sua(DTO_Chuong c){return dalc.suaC(c);}
+    public boolean sua(DTO_Chuong c){return dalc.suaC(c);}
+
+    public boolean xoa(DTO_Chuong c){
+        return dalc.xoaC(c);
+    }
 }

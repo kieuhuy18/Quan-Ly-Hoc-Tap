@@ -8,8 +8,6 @@ import javafx.stage.Stage;
 import app.doan.DTO.DTO_CongViec;
 import java.io.IOException;
 
-import static app.doan.GUI.HTDangNhap.MaND;
-
 public class Main extends Application {
     public static Stage primaryStage;
     private ObservableList<DTO_CongViec> tasks;
@@ -23,9 +21,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
-        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/doan/HTDangNhap.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/doan/HTTrangChu.fxml"));
-        MaND = "kieuduchuy03@gmail.com";
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/doan/HTDangNhap.fxml"));
         Scene scene = new Scene(loader.load());
         primaryStage.setTitle("Dang Nhap");
         primaryStage.setScene(scene);

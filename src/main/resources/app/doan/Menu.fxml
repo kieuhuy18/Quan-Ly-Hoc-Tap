@@ -100,7 +100,7 @@
                       <CategoryAxis fx:id="lineChartXAxis" label="Ngày" side="BOTTOM" />
                     </xAxis>
                     <yAxis>
-                      <NumberAxis fx:id="lineChartYAxis" label="Số phiên Pomodoro" side="LEFT" />
+                      <NumberAxis fx:id="lineChartYAxis" label="Pomodoro" side="LEFT" />
                     </yAxis>
                      <HBox.margin>
                         <Insets bottom="25.0" left="80.0" right="150.0" />

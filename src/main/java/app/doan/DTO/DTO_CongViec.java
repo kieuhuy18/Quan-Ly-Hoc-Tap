@@ -2,6 +2,7 @@ package app.doan.DTO;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 public class DTO_CongViec {
     private String maCV;
@@ -118,5 +119,24 @@ public class DTO_CongViec {
 
     public String getMaBH() {
         return maBH;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DTO_CongViec that = (DTO_CongViec) o;
+
+        return pomoUT == that.pomoUT &&
+                pomoTT == that.pomoTT &&
+                trangThai == that.trangThai &&
+                doUuTien == that.doUuTien &&
+                Objects.equals(maCV, that.maCV) &&
+                Objects.equals(tenCV, that.tenCV) &&
+                Objects.equals(thoiGian, that.thoiGian) &&
+                Objects.equals(ghiChu, that.ghiChu) &&
+                Objects.equals(thoiGianBatDau, that.thoiGianBatDau) &&
+                Objects.equals(maBH, that.maBH);
     }
 }

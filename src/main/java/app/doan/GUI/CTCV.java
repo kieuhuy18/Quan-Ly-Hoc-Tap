@@ -1,6 +1,8 @@
 package app.doan.GUI;
 
+import app.doan.BLL.BLL_BaiHoc;
 import app.doan.BLL.BLL_CongViec;
+import app.doan.DTO.DTO_BaiHoc;
 import app.doan.DTO.DTO_CongViec;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -12,6 +14,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+import static app.doan.BLL.BLL_BaiHoc.tenBHList;
+import static app.doan.DAL.DAL_BaiHoc.bhList;
+import static app.doan.DAL.DAL_CongViec.cvList;
 import static app.doan.GUI.HTtodolist.*;
 
 public class CTCV {
@@ -57,10 +62,14 @@ public class CTCV {
     @FXML
     private  Label LBdut;
 
+    @FXML
+    private ComboBox<String> CBBtenbh;
+
     private LocalDate d;
     private int dut = 0;
     private ContextMenu contextMenu;
     private final BLL_CongViec bllcv = new BLL_CongViec();
+    private BLL_BaiHoc bllbh = new BLL_BaiHoc();
     public DTO_CongViec c = new DTO_CongViec();
     DTO_CongViec cv = bllcv.tim(mahienthi);
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -85,6 +94,18 @@ public class CTCV {
         };
         String state = cv.getTrangThai() ? "checked" : "unchecked";
         LBcheck.setGraphic(IconProvider.getIcon(state + "_" + color));
+
+        CBBtenbh.getItems().add("Trống");
+        CBBtenbh.getItems().addAll(tenBHList);
+        if(cv.getMaBH() == null){
+            CBBtenbh.setValue("Trống");
+        }else{
+            for(DTO_BaiHoc t:bhList){
+                if(cv.getMaBH().equals(t.getMaBH())){
+                    CBBtenbh.setValue(t.getTenBH());
+                }
+            }
+        }
 
         if(cv.getThoiGian() == null){
             LBdate.setText("Trống");
@@ -143,7 +164,7 @@ public class CTCV {
         });
         datePicker.setOnAction(event -> { //Xu ly su kien khi chon ngay
             d = datePicker.getValue();
-            String selectedDate = datePicker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            String selectedDate = datePicker.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
             LBdate.setText(selectedDate);
             datePicker.setOpacity(0);
             datePicker.setDisable(true);
@@ -191,18 +212,33 @@ public class CTCV {
             c.setPomoUT(Integer.parseInt(displayLabel3.getText()));
             c.setPomoTT(Integer.parseInt(displayLabel2.getText()));
             c.setGhiChu(TAghichu.getText());
+            String t = bllbh.timBH(2, CBBtenbh.getValue());
+            if(CBBtenbh.getValue().equals("Trống")) {
+                c.setMaBH(null);
+            } else if(t.equals("trung") && !CBBtenbh.getValue().equals("Trống")){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Cảnh báo");
+                alert.setHeaderText("Tên bài học đã bị trùng với một bài học khác, vui lòng thay đổi");
+                alert.showAndWait();
+            }else{
+                c.setMaBH(CBBtenbh.getValue());
+            }
             Stage stage = (Stage) IMclose.getScene().getWindow();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Xác nhận");
-            alert.setHeaderText("Lưu thay đổi?");
+            if(c.equals(cv)){
+                stage.close();
+            }else{
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Xác nhận");
+                alert.setHeaderText("Lưu thay đổi?");
 
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK){
-                bllcv.sua(c);
-                stage.close();
-            }else {
-                bllcv.sua(cv);
-                stage.close();
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK){
+                    bllcv.sua(c);
+                    stage.close();
+                }else {
+                    bllcv.sua(cv);
+                    stage.close();
+                }
             }
         });
     }
@@ -246,4 +282,5 @@ public class CTCV {
         String state = c.getTrangThai() ? "checked" : "unchecked";
         LBcheck.setGraphic(IconProvider.getIcon(state + "_" + color));
     }
+
 }
