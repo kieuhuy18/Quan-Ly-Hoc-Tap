@@ -1,5 +1,7 @@
 module app.doan {
     requires javafx.fxml;
+    requires javafx.media;
+    requires javafx.web;
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;

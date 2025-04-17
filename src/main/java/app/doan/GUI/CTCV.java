@@ -79,6 +79,7 @@ public class CTCV {
         //setup
         c.setTrangThai(cv.getTrangThai());
         LBcheck.setOnMouseClicked(event -> toggleCheckbox());
+        dut = cv.getDoUuTien();
 
         String url1 = String.valueOf(getClass().getResource("/app/doan/image/FlagRed.png"));
         String url2 = String.valueOf(getClass().getResource("/app/doan/image/FlagOrange.png"));
