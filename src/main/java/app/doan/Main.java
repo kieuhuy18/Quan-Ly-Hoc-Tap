@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 import app.doan.DTO.DTO_CongViec;
 import java.io.IOException;
 
+import static app.doan.GUI.HTDangNhap.MaND;
+
 public class Main extends Application {
     public static Stage primaryStage;
     private ObservableList<DTO_CongViec> tasks;

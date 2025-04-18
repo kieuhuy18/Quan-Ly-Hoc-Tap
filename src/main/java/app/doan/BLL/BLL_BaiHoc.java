@@ -83,6 +83,7 @@ public class BLL_BaiHoc {
     }
 
     public String timBH(int i, String nd){
+        tailist();
         switch(i){
             case 1:
                 for(DTO_BaiHoc b:bhList){

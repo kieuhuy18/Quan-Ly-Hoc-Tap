@@ -89,6 +89,8 @@ public class CTC {
                 alert.showAndWait();
             }else{
                 chuong.setMaChuong(c.getMaChuong());
+                System.out.println(c.getMaChuong() + "c");
+                System.out.println(chuong.getMaChuong() + "chuong");
                 chuong.setTenChuong(displayLabel.getText());
                 chuong.setMoTa(TAmota.getText());
                 chuong.setMaHP(c.getMaHP());

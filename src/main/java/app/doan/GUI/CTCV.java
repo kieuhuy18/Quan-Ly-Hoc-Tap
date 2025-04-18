@@ -16,7 +16,6 @@ import java.util.Optional;
 
 import static app.doan.BLL.BLL_BaiHoc.tenBHList;
 import static app.doan.DAL.DAL_BaiHoc.bhList;
-import static app.doan.DAL.DAL_CongViec.cvList;
 import static app.doan.GUI.HTtodolist.*;
 
 public class CTCV {
@@ -79,6 +78,7 @@ public class CTCV {
         //setup
         c.setTrangThai(cv.getTrangThai());
         LBcheck.setOnMouseClicked(event -> toggleCheckbox());
+
         dut = cv.getDoUuTien();
 
         String url1 = String.valueOf(getClass().getResource("/app/doan/image/FlagRed.png"));
@@ -98,6 +98,7 @@ public class CTCV {
 
         CBBtenbh.getItems().add("Trống");
         CBBtenbh.getItems().addAll(tenBHList);
+
         if(cv.getMaBH() == null){
             CBBtenbh.setValue("Trống");
         }else{
@@ -222,7 +223,7 @@ public class CTCV {
                 alert.setHeaderText("Tên bài học đã bị trùng với một bài học khác, vui lòng thay đổi");
                 alert.showAndWait();
             }else{
-                c.setMaBH(CBBtenbh.getValue());
+                c.setMaBH(t);
             }
             Stage stage = (Stage) IMclose.getScene().getWindow();
             if(c.equals(cv)){
@@ -274,7 +275,7 @@ public class CTCV {
         dut = value;
         LBdut.setText(item.getText());
         BTdut.setStyle("-fx-background-image: url('" + url + "/'); -fx-background-size: 40px 40px; -fx-text-fill: transparent;");
-        String color = switch (c.getDoUuTien()) {
+        String color = switch (value) {
             case 1 -> "red";
             case 2 -> "orange";
             case 3 -> "green";

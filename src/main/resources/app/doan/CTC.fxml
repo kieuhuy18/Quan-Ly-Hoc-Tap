@@ -13,10 +13,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="540.0" prefWidth="1000.0" style="-fx-background-color: D9D9D9; -fx-border-color: black;" stylesheets="@style/CTC.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.doan.GUI.CTC">
    <children>
-      <VBox layoutX="-2.0" layoutY="-2.0" prefHeight="561.0" prefWidth="1012.0" style="-fx-background-color: D9D9D9; -fx-border-color: black;" stylesheets="@style/CTC.css">
+      <VBox layoutX="-2.0" layoutY="-2.0" prefHeight="561.0" prefWidth="1012.0" style="-fx-background-color: D9D9D9; -fx-border-color: black;" stylesheets="@style/CTC.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fx:id="IMclose" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>

@@ -5,12 +5,15 @@ import app.doan.DTO.DTO_CongViec;
 import javafx.fxml.FXML;
 import javafx.scene.chart.*;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.EnumMap;
 import java.util.Map;
 
 import static app.doan.BLL.BLL_CongViec.*;
+import static app.doan.DAL.DAL_CongViec.cvList;
 
 public class Menu {
     @FXML private BarChart<String, Number> barChart;
@@ -39,40 +42,58 @@ public class Menu {
         XYChart.Series<String, Number> actualSeries = new XYChart.Series<>();
         actualSeries.setName("Thực tế");
 
-        // Giả sử bạn có danh sách:
         for (DTO_CongViec cv : today) {
-            estimatedSeries.getData().add(new XYChart.Data<>(cv.getTenCV(), cv.getPomoUT()));
-            actualSeries.getData().add(new XYChart.Data<>(cv.getTenCV(), cv.getPomoTT()));
+            String tenGoc = cv.getTenCV();
+            String tenHienThi = tenGoc.length() > 15 ? tenGoc.substring(0, 12) + "..." : tenGoc;
+
+            XYChart.Data<String, Number> est = new XYChart.Data<>(tenHienThi, cv.getPomoUT());
+            XYChart.Data<String, Number> act = new XYChart.Data<>(tenHienThi, cv.getPomoTT());
+
+            Tooltip.install(est.getNode(), new Tooltip("Ước tính: " + cv.getPomoUT() + "\n" + tenGoc));
+            Tooltip.install(act.getNode(), new Tooltip("Thực tế: " + cv.getPomoTT() + "\n" + tenGoc));
+
+            estimatedSeries.getData().add(est);
+            actualSeries.getData().add(act);
         }
         barChart.getData().addAll(estimatedSeries, actualSeries);
+
+        LocalDate today = LocalDate.now();
+        DayOfWeek currentDayOfWeek = today.getDayOfWeek();
+        LocalDate startOfWeek = today.minusDays(currentDayOfWeek.getValue() - 1); // Thứ Hai
+        LocalDate endOfWeek = startOfWeek.plusDays(6); // Chủ Nhật
 
         Map<DayOfWeek, Integer> pomodoroTheoNgay = new EnumMap<>(DayOfWeek.class);
         for (DayOfWeek day : DayOfWeek.values()) {
             pomodoroTheoNgay.put(day, 0);
         }
 
-        for (DTO_CongViec cv : today) {
-            DayOfWeek day = cv.getThoiGian().getDayOfWeek();
-            pomodoroTheoNgay.put(day, pomodoroTheoNgay.get(day) + cv.getPomoTT());
+        for (DTO_CongViec cv : cvList) {
+            LocalDate ngayCV = cv.getThoiGian(); // Giả sử kiểu dữ liệu là LocalDate
+            if ((ngayCV.isEqual(startOfWeek) || ngayCV.isAfter(startOfWeek)) &&
+                    (ngayCV.isEqual(endOfWeek) || ngayCV.isBefore(endOfWeek))) {
+
+                DayOfWeek day = ngayCV.getDayOfWeek();
+                pomodoroTheoNgay.put(day, pomodoroTheoNgay.get(day) + cv.getPomoTT());
+            }
         }
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Pomodoro thực tế");
+        series.setName("Pomodoro thực tế trong tuần");
 
-// Tuần bắt đầu từ Monday đến Sunday
         DayOfWeek[] thuTu = {
                 DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY,
                 DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY
         };
 
         for (DayOfWeek day : thuTu) {
-            String tenThu = chuyenSangTiengViet(day); // bạn có thể tự tạo hàm này nếu muốn
+            String tenThu = chuyenSangTiengViet(day);
             int soPomo = pomodoroTheoNgay.getOrDefault(day, 0);
             series.getData().add(new XYChart.Data<>(tenThu, soPomo));
         }
 
-        lineChartPomodoroWeek.getData().clear(); // xóa dữ liệu cũ nếu có
+        lineChartPomodoroWeek.getData().clear();
         lineChartPomodoroWeek.getData().add(series);
+
     }
 
     private String chuyenSangTiengViet(DayOfWeek day) {

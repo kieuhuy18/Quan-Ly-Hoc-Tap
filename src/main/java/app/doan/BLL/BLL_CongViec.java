@@ -110,6 +110,7 @@ public class BLL_CongViec {
         tailist();
         for(DTO_CongViec cv : cvList){
             if(Objects.equals(cv.getMaCV(), ma)){
+                System.out.println(cv.getMaBH());
                 return cv;
             }
         }
